@@ -116,70 +116,58 @@ public:
         return transposed;
     }
 
-    SparseMatrix operator*(const SparseMatrix &other) const
+SparseMatrix operator*(const SparseMatrix &b) const
     {
-        // Check if the dimensions match for multiplication
-        if (this->columns != other.rows)
+        if (this->columns != b.rows)
         {
             cout << "Matrix dimensions do not match for multiplication." << endl;
-            exit(EXIT_FAILURE); // Exit if dimensions are incompatible
+            exit(EXIT_FAILURE);
         }
 
-        // Transpose the second matrix
-        SparseMatrix otherTransposed = other.Transpose();
+        SparseMatrix bTransposed = b.Transpose();
+        SparseMatrix result(this->rows, b.columns, this->rows * b.columns);
 
-        // Create a result matrix with the appropriate size
-        SparseMatrix product(this->rows, other.columns, this->rows * other.columns);
+        int apos = 1;
+        int bpos;
 
-        int count = 1;
-
-        // Multiply the matrices
-        for (int i = 1; i <= this->nonZeros; ++i)
+        while (apos <= this->nonZeros)
         {
-            int rowA = this->sparse[i][0];
-            int colA = this->sparse[i][1];
-            int valA = this->sparse[i][2];
+            int r = this->sparse[apos][0];
 
-            for (int j = 1; j <= otherTransposed.nonZeros; ++j)
+            bpos = 1;
+            while (bpos <= bTransposed.nonZeros)
             {
-                int rowB = otherTransposed.sparse[j][0];
-                int colB = otherTransposed.sparse[j][1];
-                int valB = otherTransposed.sparse[j][2];
+                int c = bTransposed.sparse[bpos][0];
 
-                if (colA == rowB)
+                int tempa = apos;
+                int tempb = bpos;
+
+                int sum = 0;
+
+                while (tempa <= this->nonZeros && this->sparse[tempa][0] == r &&
+                       tempb <= bTransposed.nonZeros && bTransposed.sparse[tempb][0] == c)
                 {
-                    int newRow = rowA;
-                    int newCol = colB;
-                    int newValue = valA * valB;
-
-                    // Check if this (newRow, newCol) already has a value in the product matrix
-                    bool found = false;
-                    for (int k = 1; k <= count; ++k)
-                    {
-                        if (product.sparse[k][0] == newRow && product.sparse[k][1] == newCol)
-                        {
-                            product.sparse[k][2] += newValue;
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    // If not found, add a new entry
-                    if (!found)
-                    {
-                        product.sparse[count][0] = newRow;
-                        product.sparse[count][1] = newCol;
-                        product.sparse[count][2] = newValue;
-                        ++count;
-                    }
+                    if (this->sparse[tempa][1] < bTransposed.sparse[tempb][1])
+                        ++tempa;
+                    else if (this->sparse[tempa][1] > bTransposed.sparse[tempb][1])
+                        ++tempb;
+                    else
+                        sum += this->sparse[tempa++][2] * bTransposed.sparse[tempb++][2];
                 }
+
+                if (sum != 0)
+                    result.setMatrix(r, c, sum);
+
+                while (bpos <= bTransposed.nonZeros && bTransposed.sparse[bpos][0] == c)
+                    ++bpos;
             }
+
+            while (apos <= this->nonZeros && this->sparse[apos][0] == r)
+                ++apos;
         }
 
-        // Update the number of non-zero elements in the product matrix
-        product.sparse[0][2] = count - 1;
-
-        return product;
+        result.nonZeros = result.current - 1;
+        return result;
     }
 };
 
