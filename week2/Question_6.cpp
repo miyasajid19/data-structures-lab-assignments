@@ -17,7 +17,7 @@ public:
         this->rows = rows;
         this->columns = columns;
         this->nonZeros = nonZeros;
-        this->current = 1;                // Start from 1 because index 0 is reserved for matrix dimensions
+        this->current = 1; // Start from 1 because index 0 is reserved for matrix dimensions
         sparse = new int *[nonZeros + 1]; // Create an array for storing non-zero values
         for (int i = 0; i <= nonZeros; i++)
         {
@@ -27,6 +27,15 @@ public:
         sparse[0][0] = rows;
         sparse[0][1] = columns;
         sparse[0][2] = nonZeros;
+    }
+
+    ~SparseMatrix()
+    {
+        for (int i = 0; i <= nonZeros; i++)
+        {
+            delete[] sparse[i];
+        }
+        delete[] sparse;
     }
 
     void setMatrix(int row, int column, int value)
@@ -50,7 +59,7 @@ public:
         }
     }
 
-    void displaySparse()
+    void displaySparse() const
     {
         for (int i = 0; i <= nonZeros; i++)
         {
@@ -58,14 +67,14 @@ public:
         }
     }
 
-    void displayMatrix()
+    void displayMatrix() const
     {
         int count = 1;
         for (int i = 0; i < this->sparse[0][0]; i++)
         {
             for (int j = 0; j < this->sparse[0][1]; j++)
             {
-                if (count <= nonZeros and sparse[count][0] == i and sparse[count][1] == j)
+                if (count <= nonZeros && sparse[count][0] == i && sparse[count][1] == j)
                 {
                     cout << this->sparse[count][2] << "\t";
                     ++count;
@@ -79,7 +88,6 @@ public:
         }
     }
 
-    // Helper function to sort the sparse matrix based on rows, and if rows are same, then based on columns
     static bool sortSparse(const int *a, const int *b)
     {
         if (a[0] == b[0])
@@ -87,9 +95,9 @@ public:
         return a[0] < b[0];     // Sort by row
     }
 
-    SparseMatrix Transpose()
+    SparseMatrix Transpose() const
     {
-        SparseMatrix transposed(this->columns, this->rows, this->nonZeros); // create template for transposed matrix
+        SparseMatrix transposed(this->columns, this->rows, this->nonZeros); // Create template for transposed matrix
         transposed.sparse[0][0] = this->columns;
         transposed.sparse[0][1] = this->rows;
         transposed.sparse[0][2] = this->nonZeros;
@@ -107,100 +115,114 @@ public:
 
         return transposed;
     }
-    SparseMatrix operator+(const SparseMatrix &other)
+
+    SparseMatrix operator*(const SparseMatrix &other) const
     {
-        // Check if the dimensions match for addition
-        if (this->rows != other.rows || this->columns != other.columns)
+        // Check if the dimensions match for multiplication
+        if (this->columns != other.rows)
         {
-            cout << "Matrix dimensions do not match for addition." << endl;
+            cout << "Matrix dimensions do not match for multiplication." << endl;
             exit(EXIT_FAILURE); // Exit if dimensions are incompatible
         }
 
-        // Create a result matrix, initially assuming the worst case (nonZeros of both matrices)
-        SparseMatrix sum(this->rows, this->columns, this->nonZeros + other.nonZeros);
+        // Transpose the second matrix
+        SparseMatrix otherTransposed = other.Transpose();
 
-        int i = 1, j = 1, k = 1; // i and j are for the current positions in both matrices, k is for the result matrix
+        // Create a result matrix with the appropriate size
+        SparseMatrix product(this->rows, other.columns, this->rows * other.columns);
 
-        // Traverse through both sparse matrices
-        while (i <= this->nonZeros && j <= other.nonZeros)
+        int count = 1;
+
+        // Multiply the matrices
+        for (int i = 1; i <= this->nonZeros; ++i)
         {
-            // If the current element in this matrix comes before the current element in other
-            if (this->sparse[i][0] < other.sparse[j][0] ||
-                (this->sparse[i][0] == other.sparse[j][0] && this->sparse[i][1] < other.sparse[j][1]))
+            int rowA = this->sparse[i][0];
+            int colA = this->sparse[i][1];
+            int valA = this->sparse[i][2];
+
+            for (int j = 1; j <= otherTransposed.nonZeros; ++j)
             {
-                sum.sparse[k][0] = this->sparse[i][0];
-                sum.sparse[k][1] = this->sparse[i][1];
-                sum.sparse[k][2] = this->sparse[i][2];
-                i++;
+                int rowB = otherTransposed.sparse[j][0];
+                int colB = otherTransposed.sparse[j][1];
+                int valB = otherTransposed.sparse[j][2];
+
+                if (colA == rowB)
+                {
+                    int newRow = rowA;
+                    int newCol = colB;
+                    int newValue = valA * valB;
+
+                    // Check if this (newRow, newCol) already has a value in the product matrix
+                    bool found = false;
+                    for (int k = 1; k <= count; ++k)
+                    {
+                        if (product.sparse[k][0] == newRow && product.sparse[k][1] == newCol)
+                        {
+                            product.sparse[k][2] += newValue;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    // If not found, add a new entry
+                    if (!found)
+                    {
+                        product.sparse[count][0] = newRow;
+                        product.sparse[count][1] = newCol;
+                        product.sparse[count][2] = newValue;
+                        ++count;
+                    }
+                }
             }
-            // If the current element in other matrix comes before the current element in this
-            else if (other.sparse[j][0] < this->sparse[i][0] ||
-                     (other.sparse[j][0] == this->sparse[i][0] && other.sparse[j][1] < this->sparse[i][1]))
-            {
-                sum.sparse[k][0] = other.sparse[j][0];
-                sum.sparse[k][1] = other.sparse[j][1];
-                sum.sparse[k][2] = other.sparse[j][2];
-                j++;
-            }
-            // If both elements have the same row and column, add their values
-            else
-            {
-                sum.sparse[k][0] = this->sparse[i][0];
-                sum.sparse[k][1] = this->sparse[i][1];
-                sum.sparse[k][2] = this->sparse[i][2] + other.sparse[j][2];
-                i++;
-                j++;
-            }
-            k++;
         }
 
-        // Copy any remaining elements from this matrix
-        while (i <= this->nonZeros)
-        {
-            sum.sparse[k][0] = this->sparse[i][0];
-            sum.sparse[k][1] = this->sparse[i][1];
-            sum.sparse[k][2] = this->sparse[i][2];
-            i++;
-            k++;
-        }
+        // Update the number of non-zero elements in the product matrix
+        product.sparse[0][2] = count - 1;
 
-        // Copy any remaining elements from the other matrix
-        while (j <= other.nonZeros)
-        {
-            sum.sparse[k][0] = other.sparse[j][0];
-            sum.sparse[k][1] = other.sparse[j][1];
-            sum.sparse[k][2] = other.sparse[j][2];
-            j++;
-            k++;
-        }
-
-        // Update the number of non-zero elements in the sum matrix
-        sum.sparse[0][2] = k - 1;
-
-        return sum;
+        return product;
     }
 };
+
 int main()
 {
-    SparseMatrix mat(4, 4, 4);
-    mat.setMatrix(0, 0, 1);
-    mat.setMatrix(1, 1, 3);
-    mat.setMatrix(3, 0, 2);
-    mat.setMatrix(3, 3, 1);
+    SparseMatrix mat1(4, 4, 4);
+    mat1.setMatrix(0, 0, 1);
+    mat1.setMatrix(1, 1, 3);
+    mat1.setMatrix(2, 2, 2);
+    mat1.setMatrix(3, 3, 1);
 
-    cout << "Original Sparse Matrix:" << endl;
-    mat.displaySparse();
+    SparseMatrix mat2(4, 4, 4);
+    mat2.setMatrix(0, 0, 2);
+    mat2.setMatrix(1, 1, 3);
+    mat2.setMatrix(2, 2, 4);
+    mat2.setMatrix(3, 3, 5);
+
+    cout << "Matrix A:" << endl;
+    mat1.displayMatrix();
     cout << endl;
 
-    cout << "Original Matrix Representation:" << endl;
-    mat.displayMatrix();
+    cout << "Matrix B:" << endl;
+    mat2.displayMatrix();
     cout << endl;
 
-    SparseMatrix transposed = mat.Transpose();
-    cout << "Transposed Matrix Representation:" << endl;
-    transposed.displayMatrix();
+    SparseMatrix product = mat1 * mat2;
+    cout << "Product Matrix:" << endl;
+    product.displayMatrix();
     cout << endl;
-    transposed = transposed + mat;
-    transposed.displayMatrix();
+
+    SparseMatrix A(2,2,2);
+    A.setMatrix(0,0,1);
+    A.setMatrix(0,1,2);
+    A.displayMatrix();
+    cout << endl;
+    SparseMatrix B(2,2,2);
+    B.setMatrix(1,0,1);
+    B.setMatrix(1,1,2);
+    B.displayMatrix();
+
+    cout << endl;
+    SparseMatrix C=A*B;
+
+    C.displayMatrix();
     return EXIT_SUCCESS;
 }
