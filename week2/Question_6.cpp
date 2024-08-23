@@ -61,6 +61,7 @@ public:
 
     void displaySparse() const
     {
+        cout << "Sparse Matrix Representation:" << endl;
         for (int i = 0; i <= nonZeros; i++)
         {
             cout << sparse[i][0] << "\t" << sparse[i][1] << "\t" << sparse[i][2] << "\n";
@@ -69,6 +70,7 @@ public:
 
     void displayMatrix() const
     {
+        cout << "Matrix Representation:" << endl;
         int count = 1;
         for (int i = 0; i < this->sparse[0][0]; i++)
         {
@@ -116,7 +118,7 @@ public:
         return transposed;
     }
 
-SparseMatrix operator*(const SparseMatrix &b) const
+    SparseMatrix operator*(const SparseMatrix &b) const
     {
         if (this->columns != b.rows)
         {
@@ -173,6 +175,7 @@ SparseMatrix operator*(const SparseMatrix &b) const
 
 int main()
 {
+    // Initialize matrices
     SparseMatrix mat1(4, 4, 4);
     mat1.setMatrix(0, 0, 1);
     mat1.setMatrix(1, 1, 3);
@@ -185,32 +188,39 @@ int main()
     mat2.setMatrix(2, 2, 4);
     mat2.setMatrix(3, 3, 5);
 
-    cout << "Matrix A:" << endl;
+    cout << "Matrix A (4x4):" << endl;
     mat1.displayMatrix();
     cout << endl;
 
-    cout << "Matrix B:" << endl;
+    cout << "Matrix B (4x4):" << endl;
     mat2.displayMatrix();
     cout << endl;
 
     SparseMatrix product = mat1 * mat2;
-    cout << "Product Matrix:" << endl;
+    cout << "Product Matrix A * B (4x4):" << endl;
     product.displayMatrix();
     cout << endl;
 
-    SparseMatrix A(2,2,2);
-    A.setMatrix(0,0,1);
-    A.setMatrix(0,1,2);
+    // Test with another example
+    SparseMatrix A(2, 2, 2);
+    A.setMatrix(0, 0, 1);
+    A.setMatrix(0, 1, 2);
+
+    SparseMatrix B(2, 2, 2);
+    B.setMatrix(1, 0, 1);
+    B.setMatrix(1, 1, 2);
+
+    cout << "Matrix A (2x2):" << endl;
     A.displayMatrix();
     cout << endl;
-    SparseMatrix B(2,2,2);
-    B.setMatrix(1,0,1);
-    B.setMatrix(1,1,2);
+
+    cout << "Matrix B (2x2):" << endl;
     B.displayMatrix();
-
     cout << endl;
-    SparseMatrix C=A*B;
 
+    SparseMatrix C = A * B;
+    cout << "Product Matrix A * B (2x2):" << endl;
     C.displayMatrix();
+
     return EXIT_SUCCESS;
 }

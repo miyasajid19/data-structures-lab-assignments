@@ -46,8 +46,8 @@ void display() {
     int main()
     {
 #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
+       freopen("input.txt", "r", stdin);
+       freopen("output.txt", "w", stdout);
 #endif
         int n = 4; // Example size of the matrix (4x4)
         LowerTriangularMatrix matrix(n);

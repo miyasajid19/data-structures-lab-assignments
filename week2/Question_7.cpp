@@ -23,12 +23,12 @@ int main()
 {
     int *arr = nullptr;
     int size;
-    cout << "enter the size of array :";
+    cout << "enter the size of array : ";
     cin >> size;
     arr = new int[size];
     for (int i = 0; i < size; i++)
     {
-        cout << "Element " << i + 1;
+        cout << "Element " << i + 1<<"\t";
         cin >> arr[i];
     }
     cout << endl

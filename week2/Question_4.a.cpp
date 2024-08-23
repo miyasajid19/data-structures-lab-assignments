@@ -10,8 +10,8 @@ string add(string a, string b)
 int main()
 {
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+   freopen("input.txt", "r", stdin);
+   freopen("output.txt", "w", stdout);
 #endif
 string first,second;
 cout<<"enter first string "<<endl;

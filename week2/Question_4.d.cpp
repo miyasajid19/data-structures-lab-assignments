@@ -10,9 +10,10 @@ string stringsort(string a)
         {
             if (a[j] > a[j + 1])
             {
-                char temp=a[j];
-                a[j]=a[j+1];
-                a[j+1]=temp;
+                // char temp=a[j];
+                // a[j]=a[j+1];
+                // a[j+1]=temp;
+                swap(a[j],a[j+1]);
             }
         }
     }

@@ -50,10 +50,10 @@ arr.push_back(c);
 };
 main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
+//#ifndef ONLINE_JUDGE
+//    freopen("input.txt", "r", stdin);
+//    freopen("output.txt", "w", stdout);
+//#endif
 // two dimensional diagonal array
 DiagonalMatrix d1;
 d1.arr.push_back(1);

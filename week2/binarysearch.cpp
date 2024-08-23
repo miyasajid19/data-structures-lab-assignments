@@ -1,10 +1,13 @@
 #include <iostream>
-#include <cstdlib>
+#include <vector>
+#include <algorithm> // For std::swap
+
 using namespace std;
-int search(int arr[], int size, int key)
+
+int search(const vector<int>& arr, int key)
 {
     int first = 0;
-    int last = size - 1;
+    int last = arr.size() - 1;
     while (first <= last)
     {
         int middle = (first + last) / 2;
@@ -13,7 +16,6 @@ int search(int arr[], int size, int key)
             return middle;
         }
         else if (arr[middle] < key)
-
         {
             first = middle + 1;
         }
@@ -24,52 +26,57 @@ int search(int arr[], int size, int key)
     }
     return -1;
 }
+
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    cout << "how many elements do you have?" << endl;
+    cout << "How many elements do you have?" << endl;
     int size;
     cin >> size;
-    int arr[size];
+
+    if (size <= 0)
+    {
+        cout << "Invalid array size." << endl;
+        return EXIT_FAILURE;
+    }
+
+    vector<int> arr(size);
     for (int i = 0; i < size; i++)
     {
-        cout << "enter the element " << i + 1 << endl;
+        cout << "Enter element " << i + 1 << ":" << endl;
         cin >> arr[i];
     }
-    // bubble sorting
-    for (int i = 0; i < size; i++)
+
+    // Bubble Sort
+    for (int i = 0; i < size - 1; i++)
     {
         bool flag = false;
         for (int j = 0; j < size - i - 1; j++)
         {
             if (arr[j] > arr[j + 1])
             {
-                // int temp = arr[j];
-                // arr[j] = arr[j + 1];
-                // arr[j + 1] = temp;
-                swap(arr[j],arr[j+1]);
+                swap(arr[j], arr[j + 1]);
                 flag = true;
             }
         }
-        if (flag)
+        if (!flag)
         {
-            break;
+            break; // No swaps means the array is sorted
         }
     }
-    cout << "enter the element that you want to search?" << endl;
+
+    cout << "Enter the element that you want to search for:" << endl;
     int key;
     cin >> key;
-    int status = search(arr, size, key);
+
+    int status = search(arr, key);
     if (status != -1)
     {
-        cout << key << " found in index " << status << endl;
+        cout << key << " found at index " << status << endl;
     }
     else
     {
         cout << key << " not found" << endl;
     }
+
     return EXIT_SUCCESS;
 }
