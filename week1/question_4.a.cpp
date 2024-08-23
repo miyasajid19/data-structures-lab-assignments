@@ -2,10 +2,10 @@
 using namespace std;
 int main()
 {
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt","r",stdin);
-        freopen("output.txt","w",stdout);
-    #endif
+   #ifndef ONLINE_JUDGE
+       freopen("input.txt","r",stdin);
+       freopen("output.txt","w",stdout);
+   #endif
 	int size;
 	cout<<"enter the size of array ";
 	cin>>size;
