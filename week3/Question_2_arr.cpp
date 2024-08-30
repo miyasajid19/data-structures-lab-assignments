@@ -9,11 +9,8 @@ template <typename T>
 T reverse(T str) {
     Stacks<char> temp(str.size());
     for (int i = 0; i < str.size(); i++) {
-        cout << str[i] << " ";
         temp.Push(str[i]);
     }
-    cout << endl;
-
     T result;
     while (!temp.isEmpty()) {
         result += temp.Peek();
