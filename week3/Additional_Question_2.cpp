@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <climits> // For INT_MAX
 using namespace std;
 
 class Stacks
@@ -10,7 +11,7 @@ class Stacks
     int minimum;
 
 public:
-    Stacks() : size(0), capacity(0), arr(nullptr) {}
+    Stacks() : size(0), capacity(0), arr(nullptr), minimum(INT_MAX) {}
 
     Stacks(int capacity)
     {
@@ -25,6 +26,7 @@ public:
         this->size = 0;
         this->capacity = capacity;
         arr = new int[capacity]();
+        this->minimum = INT_MAX;
     }
 
     void reStack(int capacity)
@@ -61,14 +63,21 @@ public:
             std::cout << "Stack overflow" << std::endl;
             return;
         }
-        // x - minimum= value
-        if (size == 0)
+
+        if (isEmpty())
         {
-            this->minimum = min(minimum, value);
+            minimum = value;
+            arr[this->size++] = 0; // Store 0 as diff when minimum is same as value
         }
-        minimum = min(minimum, value);
-        value = value - minimum;
-        arr[this->size++] = value;
+        else
+        {
+            int diff = value - minimum;
+            arr[this->size++] = diff;
+            if (diff < 0)
+            {
+                minimum = value;
+            }
+        }
     }
 
     void Pop()
@@ -78,6 +87,12 @@ public:
             std::cout << "Stack underflow" << std::endl;
             return;
         }
+
+        int top = arr[this->size - 1];
+        if (top < 0)
+        {
+            minimum = minimum - top; // Restore previous minimum
+        }
         this->size--;
     }
 
@@ -85,26 +100,41 @@ public:
     {
         if (isEmpty())
         {
-            std::cout << "stack is empty" << std::endl;
-            return int();
+            std::cout << "Stack is empty" << std::endl;
+            return INT_MAX; // Return a placeholder
         }
 
-        return arr[this->size - 1] + this->minimum;
+        int top = arr[this->size - 1];
+        if (top < 0)
+        {
+            return minimum; // Return the minimum as it's the top element
+        }
+        else
+        {
+            return top + minimum; // Recover original value
+        }
     }
-    int getMinimum()
+
+    int getMinimum() const
     {
-        return this->minimum;
+        if (isEmpty())
+        {
+            std::cout << "Stack is empty" << std::endl;
+            return INT_MAX; // Return placeholder for empty stack
+        }
+        return minimum;
     }
+
     ~Stacks()
     {
         delete[] arr;
     }
 };
+
 int main()
 {
     Stacks stack(5);
 
-    // Push elements onto the stack and display results
     cout << "Pushing value 4 onto the stack..." << endl;
     stack.Push(4);
     cout << "Top of the stack: " << stack.Peek() << endl;
@@ -118,7 +148,7 @@ int main()
          << endl;
 
     cout << "Pushing value 432 onto the stack..." << endl;
-    stack.Push(432);
+    stack.Push(-333);
     cout << "Top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
@@ -126,6 +156,15 @@ int main()
     cout << "Pushing value -34 onto the stack..." << endl;
     stack.Push(-34);
     cout << "Top of the stack: " << stack.Peek() << endl;
+    cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
+         << endl;
+
+    stack.Pop();
+    cout << "After popping, top of the stack: " << stack.Peek() << endl;
+    cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
+         << endl;
+    stack.Pop();
+    cout << "After popping, top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
 
