@@ -24,14 +24,13 @@ int Precedence(char x)
 }
 string InfixToPostFix(string str)
 {
-    // A+B-(C*D)/E^F
     char x;
     string result;
     Stacks<char> stack(str.size());
     for (int i = 0; i < str.size(); i++)
     {
         x = str[i];
-        if ((x >= 'a' and x <= 'z') or (x >= 'A' and x <= 'Z'))
+        if ((x >= '0' and x<='9')or(x >= 'a' and x <= 'z') or (x >= 'A' and x <= 'Z'))
         {
             result += x;
         }
