@@ -1,9 +1,27 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include "stacks.h" // Ensure this header file provides necessary stack implementation
+#include <cmath>
+#include "Stacks_linkedlist.h" 
 using namespace std;
-
+float compute(float first, float second, char const op)
+{
+    switch (op)
+    {
+    case '+':
+        return first + second;
+    case '-':
+        return first - second;
+    case '*':
+        return first * second;
+    case '/':
+        return first / second;
+    case '^':
+        return pow(first, second);
+    default:
+        return 0;
+    }
+}
 string evaluatePostfix(const string &str)
 {
     Stacks<string> stack(str.length());
@@ -20,9 +38,8 @@ string evaluatePostfix(const string &str)
             stack.Pop();
             string first = stack.Peek();
             stack.Pop();
-
-            result = '(' + first + ' ' + x + ' ' + second + ')';
-            stack.Push(result);
+            float value = compute(stof(first), stof(second), a);
+            stack.Push(to_string(value));
             result = stack.Peek();
         }
         else
@@ -39,13 +56,13 @@ int main()
     //     freopen("input.txt", "r", stdin);
     //     freopen("output.txt", "w", stdout);
     // #endif
-    cout << "Enter a postfix expression to convert it to infix: ";
+    cout << "Enter a valid postfix expression to evaluate: ";
     string str;
     cin >> str;
 
     string infix = evaluatePostfix(str);
 
-    cout << "The corresponding infix expression is: " << infix << endl;
+    cout << "The result of the postfix expression is: " << infix << endl;
 
     return EXIT_SUCCESS;
 }
