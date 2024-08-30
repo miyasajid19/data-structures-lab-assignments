@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include "stacks.h" // Ensure this header file provides necessary stack implementation
+#include "stacks.h" 
 using namespace std;
 
 string evaluatePostfix(const string &str)
