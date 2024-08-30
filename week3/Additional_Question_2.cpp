@@ -130,39 +130,48 @@ public:
         delete[] arr;
     }
 };
-
 int main()
 {
     Stacks stack(5);
 
-    cout << "Pushing value 4 onto the stack..." << endl;
-    stack.Push(4);
+    cout << "Pushing value 10 onto the stack..." << endl;
+    stack.Push(10);
     cout << "Top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
 
-    cout << "Pushing value -4 onto the stack..." << endl;
-    stack.Push(-4);
+    cout << "Pushing value 5 onto the stack..." << endl;
+    stack.Push(5);
     cout << "Top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
 
-    cout << "Pushing value 432 onto the stack..." << endl;
-    stack.Push(-333);
+    cout << "Pushing value 15 onto the stack..." << endl;
+    stack.Push(15);
     cout << "Top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
 
-    cout << "Pushing value -34 onto the stack..." << endl;
-    stack.Push(-34);
+    cout << "Pushing value 1 onto the stack..." << endl;
+    stack.Push(1);
     cout << "Top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
 
+    cout << "Pushing value -1 onto the stack..." << endl;
+    stack.Push(-1);
+    cout << "Top of the stack: " << stack.Peek() << endl;
+    cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
+         << endl;
+
+    // Popping elements and checking the state
+    cout << "Popping top element..." << endl;
     stack.Pop();
     cout << "After popping, top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
          << endl;
+
+    cout << "Popping top element..." << endl;
     stack.Pop();
     cout << "After popping, top of the stack: " << stack.Peek() << endl;
     cout << "Current minimum value in the stack: " << stack.getMinimum() << endl
