@@ -20,7 +20,6 @@ string evaluatePostfix(const string &str)
             stack.Pop();
             string first = stack.Peek();
             stack.Pop();
-
             result = '(' + first + ' ' + x + ' ' + second + ')';
             stack.Push(result);
             result = stack.Peek();
