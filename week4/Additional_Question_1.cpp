@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-#include "linearQueue.h"
+#include "circularQueue.h"
 
 using namespace std;
 
