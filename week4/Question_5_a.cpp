@@ -90,7 +90,7 @@ public:
     }
 };
 
-class Stacks
+class Stacks_PushEfficient
 {
 public:
     Queue *queue;
@@ -99,16 +99,16 @@ public:
     int size;
 
 public:
-    Stacks(int capacity)
+    Stacks_PushEfficient(int capacity)
     {
         this->capacity = capacity;
         this->queue = new Queue(this->capacity);
         this->temp = new Queue(this->capacity);
-        this->size = 0; // initialize size here
+        this->size = 0;
     }
     void Push(int value)
     {
-        if (queue->isFull()) // Check for stack overflow by checking if the queue is full
+        if (queue->isFull())
         {
             cout << "Stack Overflow" << endl;
             return;
@@ -142,13 +142,80 @@ public:
     }
     int Top()
     {
+        if (queue->isEmpty())
+        {
+            return -1;
+        }
         return queue->Peek();
+    }
+};
+class Stacks_PopEfficient
+{
+public:
+    Queue *queue;
+    Queue *temp;
+    int capacity;
+    int size;
+
+public:
+    Stacks_PopEfficient(int capacity)
+    {
+        this->capacity = capacity;
+        this->queue = new Queue(this->capacity);
+        this->temp = new Queue(this->capacity);
+        this->size = 0;
+    }
+
+    void Push(int value)
+    {
+        if (queue->isFull())
+        {
+            cout << "Stack Overflow" << endl;
+            return;
+        }
+        temp->Enqueue(value);
+        while (!queue->isEmpty())
+        {
+            temp->Enqueue(queue->Peek());
+            queue->Dequeue();
+        }
+        swap(queue, temp);
+        this->size++;
+    }
+
+    void Pop()
+    {
+        if (queue->isEmpty())
+        {
+            cout << "Stack Underflow" << endl;
+            return;
+        }
+        queue->Dequeue();
+        this->size--;
+    }
+
+    int Top()
+    {
+        if (queue->isEmpty())
+        {
+            cout << "Stack Underflow" << endl;
+            return -1;
+        }
+        return queue->Peek();
+    }
+
+    void Display()
+    {
+        queue->Display();
     }
 };
 
 int main()
 {
-    Stacks stack(3);
+    #ifdef JUDGE_ONLINE
+    freopen("output.txt","w",stdout);
+    #endif // DEBUG
+    Stacks_PopEfficient stack(3);
     stack.Push(1);
     stack.Push(2);
     stack.Push(5);
@@ -159,7 +226,52 @@ int main()
 
     stack.Pop();
     cout << "After pop:" << endl;
+    cout << "Top element: " << stack.Top() << endl;
     stack.Display();
 
+    stack.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stack.Top() << endl;
+    stack.Display();
+
+    stack.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stack.Top() << endl;
+    stack.Display();
+
+    stack.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stack.Top() << endl;
+    stack.Display();
+    cout << endl;
+    Stacks_PushEfficient stk(3);
+    stk.Push(1);
+    stk.Push(2);
+    stk.Push(5);
+
+    cout << "Top element: " << stk.Top() << endl;
+
+    stk.Display();
+
+    stk.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stk.Top() << endl;
+    stk.Display();
+
+    stk.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stk.Top() << endl;
+    stk.Display();
+
+    stk.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stk.Top() << endl;
+    stack.Display();
+
+    stk.Pop();
+    cout << "After pop:" << endl;
+    cout << "Top element: " << stk.Top() << endl;
+    stk.Display();
     return EXIT_SUCCESS;
 }
+
