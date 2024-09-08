@@ -8,7 +8,7 @@ int main()
 
     cout << "Enter the capacity of the circular queue: ";
     cin >> capacity;
-    Queue q(capacity);
+    Queue<int> q(capacity);
 
     do
     {
