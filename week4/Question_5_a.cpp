@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
+
 class Queue
 {
 public:
@@ -103,35 +104,37 @@ public:
         this->capacity = capacity;
         this->queue = new Queue(this->capacity);
         this->temp = new Queue(this->capacity);
-        int size = 0;
+        this->size = 0; // initialize size here
     }
     void Push(int value)
     {
-        if(queue->isEmpty())
+        if (queue->isFull()) // Check for stack overflow by checking if the queue is full
         {
-            cout<<"stack overflow"<<endl;
+            cout << "Stack Overflow" << endl;
             return;
         }
         temp->Enqueue(value);
-        while (not queue->isEmpty())
+        while (!queue->isEmpty())
         {
             temp->Enqueue(queue->Peek());
             queue->Dequeue();
         }
-        while(not temp->isEmpty())
+        while (!temp->isEmpty())
         {
             queue->Enqueue(temp->Peek());
             temp->Dequeue();
         }
+        this->size++;
     }
     void Pop()
     {
-        if(queue->isEmpty())
+        if (queue->isEmpty())
         {
-            cout<<"stack underflow"<<endl;
+            cout << "Stack Underflow" << endl;
             return;
         }
         queue->Dequeue();
+        this->size--;
     }
     void Display()
     {
@@ -142,13 +145,21 @@ public:
         return queue->Peek();
     }
 };
+
 int main()
 {
     Stacks stack(3);
     stack.Push(1);
-    stack.Push(1);
+    stack.Push(2);
     stack.Push(5);
-    cout<<stack.Top();
+
+    cout << "Top element: " << stack.Top() << endl;
+
     stack.Display();
+
+    stack.Pop();
+    cout << "After pop:" << endl;
+    stack.Display();
+
     return EXIT_SUCCESS;
 }
