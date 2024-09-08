@@ -1,64 +1,19 @@
 #include <iostream>
 #include <cstdlib>
 #include "linearQueue.h"
+
 using namespace std;
 
-class Stacks_PopEfficient : public Queue<int>
-{
+class Stacks_PushEfficient : public Queue<int> {
 public:
-    Stacks_PopEfficient(int capacity) : Queue(capacity) {}
+    Stacks_PushEfficient(int capacity) : Queue<int>(capacity) {}
 
-    void Push(int value)
-    {
-        if (isFull())
-        {
-            cout << "Stack Overflow" << endl;
-            return;
-        }
-        Enqueue(value);
-        int size = Size();
-        for (int i = 0; i < size - 1; ++i)
-        {
-            int x = Peek();
-            Dequeue();
-            Enqueue(x);
-        }
-    }
-
-    void Pop()
-    {
-        if (isEmpty())
-        {
+    void Pop() {
+        if (isEmpty()) {
             cout << "Stack Underflow" << endl;
             return;
         }
-        Dequeue();
-    }
-
-    int Top()
-    {
-        if (isEmpty())
-        {
-            cout << "Stack is empty" << endl;
-            return -1;
-        }
-        return Peek();
-    }
-};
-class Stacks_PushEfficient : public Queue<int>
-{
-public:
-    Stacks_PushEfficient(int capacity) : Queue(capacity) {}
-
-    void Pop()
-    {
-        if (isEmpty())
-        {
-            cout << "Stack Underflow" << endl;
-            return;
-        }
-        for (int i = 0; i < Size() - 1; i++)
-        {
+        for (int i = 0; i < Size() - 1; ++i) {
             int value = Peek();
             Dequeue();
             Enqueue(value);
@@ -66,27 +21,22 @@ public:
         Dequeue();
     }
 
-    void Push(int value)
-    {
-        if (isFull())
-        {
+    void Push(int value) {
+        if (isFull()) {
             cout << "Stack Overflow" << endl;
             return;
         }
         Enqueue(value);
     }
 
-    int Top()
-    {
-        if (isEmpty())
-        {
+    int Top() {
+        if (isEmpty()) {
             cout << "Stack is empty" << endl;
             return -1;
         }
         int topValue;
         int size = Size();
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             topValue = Peek();
             Dequeue();
             Enqueue(topValue);
@@ -94,8 +44,43 @@ public:
         return topValue;
     }
 };
-int main()
-{
+
+class Stacks_PopEfficient : public Queue<int> {
+public:
+    Stacks_PopEfficient(int capacity) : Queue<int>(capacity) {}
+
+    void Push(int value) {
+        if (isFull()) {
+            cout << "Stack Overflow" << endl;
+            return;
+        }
+        Enqueue(value);
+        int size = Size();
+        for (int i = 0; i < size - 1; ++i) {
+            int x = Peek();
+            Dequeue();
+            Enqueue(x);
+        }
+    }
+
+    void Pop() {
+        if (isEmpty()) {
+            cout << "Stack Underflow" << endl;
+            return;
+        }
+        Dequeue();
+    }
+
+    int Top() {
+        if (isEmpty()) {
+            cout << "Stack is empty" << endl;
+            return -1;
+        }
+        return Peek();
+    }
+};
+
+int main() {
     // Testing Stacks_PushEfficient
 
     cout << "Testing Stacks_PushEfficient" << endl;
