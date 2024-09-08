@@ -3,10 +3,10 @@
 #include "linearQueue.h"
 using namespace std;
 
-class Stacks : public Queue<int>
+class Stacks_PopEfficient : public Queue<int>
 {
 public:
-    Stacks(int capacity) : Queue(capacity) {}
+    Stacks_PopEfficient(int capacity) : Queue(capacity) {}
 
     void Push(int value)
     {
@@ -45,38 +45,117 @@ public:
         return Peek();
     }
 };
+class Stacks_PushEfficient : public Queue<int>
+{
+public:
+    Stacks_PushEfficient(int capacity) : Queue(capacity) {}
 
+    void Pop()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack Underflow" << endl;
+            return;
+        }
+        for (int i = 0; i < Size() - 1; i++)
+        {
+            int value = Peek();
+            Dequeue();
+            Enqueue(value);
+        }
+        Dequeue();
+    }
+
+    void Push(int value)
+    {
+        if (isFull())
+        {
+            cout << "Stack Overflow" << endl;
+            return;
+        }
+        Enqueue(value);
+    }
+
+    int Top()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack is empty" << endl;
+            return -1;
+        }
+        int topValue;
+        int size = Size();
+        for (int i = 0; i < size; i++)
+        {
+            topValue = Peek();
+            Dequeue();
+            Enqueue(topValue);
+        }
+        return topValue;
+    }
+};
 int main()
 {
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
+    // Testing Stacks_PushEfficient
 
-    Stacks stack(3);
-    stack.Push(1);
-    stack.Display();
-    cout << "Top: " << stack.Top() << endl;
+    cout << "Testing Stacks_PushEfficient" << endl;
+    Stacks_PushEfficient pushEfficientStack(3);
 
-    stack.Push(2);
-    stack.Display();
-    cout << "Top: " << stack.Top() << endl;
+    pushEfficientStack.Push(1);
+    pushEfficientStack.Display();
+    cout << "Top: " << pushEfficientStack.Top() << endl;
 
-    stack.Push(3);
-    stack.Display();
-    cout << "Top: " << stack.Top() << endl;
+    pushEfficientStack.Push(2);
+    pushEfficientStack.Display();
+    cout << "Top: " << pushEfficientStack.Top() << endl;
 
-    stack.Pop();
-    stack.Display();
-    cout << "Top: " << stack.Top() << endl;
+    pushEfficientStack.Push(3);
+    pushEfficientStack.Display();
+    cout << "Top: " << pushEfficientStack.Top() << endl;
 
-    stack.Pop();
-    stack.Display();
-    cout << "Top: " << stack.Top() << endl;
+    pushEfficientStack.Pop();
+    pushEfficientStack.Display();
+    cout << "Top: " << pushEfficientStack.Top() << endl;
 
-    stack.Pop();
-    stack.Display();
-    cout << "Top: " << stack.Top() << endl;
+    pushEfficientStack.Pop();
+    pushEfficientStack.Display();
+    cout << "Top: " << pushEfficientStack.Top() << endl;
+
+    pushEfficientStack.Pop();
+    pushEfficientStack.Display();
+    cout << "Top: " << pushEfficientStack.Top() << endl;
+
+    // Add a line break for clarity
+    cout << "-----------------------------------------------------" << endl;
+
+    // Testing Stacks_PopEfficient
+
+    cout << "Testing Stacks_PopEfficient" << endl;
+    Stacks_PopEfficient popEfficientStack(3);
+
+    popEfficientStack.Push(1);
+    popEfficientStack.Display();
+    cout << "Top: " << popEfficientStack.Top() << endl;
+
+    popEfficientStack.Push(2);
+    popEfficientStack.Display();
+    cout << "Top: " << popEfficientStack.Top() << endl;
+
+    popEfficientStack.Push(3);
+    popEfficientStack.Display();
+    cout << "Top: " << popEfficientStack.Top() << endl;
+
+    popEfficientStack.Pop();
+    popEfficientStack.Display();
+    cout << "Top: " << popEfficientStack.Top() << endl;
+
+    popEfficientStack.Pop();
+    popEfficientStack.Display();
+    cout << "Top: " << popEfficientStack.Top() << endl;
+
+    popEfficientStack.Pop();
+    popEfficientStack.Display();
+    cout << "Top: " << popEfficientStack.Top() << endl;
 
     return EXIT_SUCCESS;
 }
