@@ -1,52 +1,50 @@
 #include <iostream>
-#include <cstdlib>
+#include <limits> // For std::numeric_limits
 using namespace std;
+
+template <typename T>
 class Node
 {
 public:
-    int value;
+    T value;
     Node *Next;
-    Node(int value)
-    {
-        this->value = value;
-        this->Next = nullptr;
-    }
+    Node(T value) : value(value), Next(nullptr) {}
 };
+
+template <typename T>
 class Queue
 {
     int size;
     int capacity;
-    Node *head;
-    Node *tail;
+    Node<T> *head;
+    Node<T> *tail;
 
 public:
-    Queue(int capacity)
+    Queue(int capacity) : capacity(capacity), size(0), head(nullptr), tail(nullptr) {}
+
+    bool isEmpty() const
     {
-        this->capacity = capacity;
-        this->size = 0;
-        this->head = nullptr;
-        this->tail = nullptr;
+        return size == 0;
     }
-    bool isEmpty()
+
+    bool isFull() const
     {
-        return this->size == 0;
+        return size == capacity;
     }
-    bool isFull()
+
+    int Size() const
     {
-        return this->size == this->capacity;
+        return size;
     }
-    int Size()
-    {
-        return this->size;
-    }
-    void Enqueue(int value)
+
+    void Enqueue(T value)
     {
         if (isFull())
         {
             cout << "Queue overflow" << endl;
             return;
         }
-        Node *new_node = new Node(value);
+        Node<T> *new_node = new Node<T>(value);
         if (head == nullptr)
         {
             head = new_node;
@@ -57,8 +55,9 @@ public:
             tail->Next = new_node;
             tail = new_node;
         }
-        this->size++;
+        size++;
     }
+
     void Dequeue()
     {
         if (isEmpty())
@@ -66,7 +65,7 @@ public:
             cout << "Queue underflow" << endl;
             return;
         }
-        Node *temp = head;
+        Node<T> *temp = head;
         if (head == tail)
         {
             head = nullptr;
@@ -77,30 +76,40 @@ public:
             head = head->Next;
         }
         delete temp;
-        this->size--;
+        size--;
     }
-    int Peek()
+
+    T Peek() const
     {
         if (isEmpty())
         {
             cout << "Queue is empty" << endl;
-            return INT_MAX;
+            return T(); // Return default value for type T
         }
         return head->value;
     }
-    void Display()
+
+    void Display() const
     {
         if (isEmpty())
         {
             cout << "Queue is empty" << endl;
             return;
         }
-        Node *temp = head;
+        Node<T> *temp = head;
         while (temp != nullptr)
         {
             cout << temp->value << " ";
             temp = temp->Next;
         }
         cout << endl;
+    }
+
+    ~Queue()
+    {
+        while (!isEmpty())
+        {
+            Dequeue();
+        }
     }
 };
