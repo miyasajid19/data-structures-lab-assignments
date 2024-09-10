@@ -227,9 +227,6 @@ public:
 
 int main()
 {
-#ifndef JUDGE_ONLINE
-    freopen("output.txt", "w", stdout);
-#endif // DEBUG
 
     Stacks_PopEfficient stack(3);
     stack.Push(1);
