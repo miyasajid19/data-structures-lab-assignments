@@ -14,10 +14,10 @@ void Solution(long long num, Queue<long long> &queue)
         long long j = 1;
         while (x != 0)
         {
-            long long bit = x & 1; 
-            ans += bit * j; 
-            x >>= 1; 
-            j *= 10; 
+            int bit = x & 1;
+            ans += bit * j;
+            x >>= 1;
+            j *= 10;
         }
         queue.Enqueue(ans);
     }
@@ -29,9 +29,9 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     // #endif
-cout<<"how many data do you have?";
-long long num;
-cin>>num;
+    cout << "how many data do you have?";
+    long long num;
+    cin >> num;
     Queue<long long> result(num);
     Solution(num, result);
     result.Display();
