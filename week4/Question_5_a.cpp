@@ -89,19 +89,19 @@ public:
         cout << endl;
     }
 };
-class Stacks_PopEfficient {
+class Stacks_PushEfficient {
 public:
     Queue *queue;
     Queue *temp;
     int size;
 
-    Stacks_PopEfficient(int capacity) {
+    Stacks_PushEfficient(int capacity) {
         this->queue = new Queue(capacity);
         this->temp = new Queue(capacity);
         this->size = 0;
     }
 
-    ~Stacks_PopEfficient() {
+    ~Stacks_PushEfficient() {
         delete queue;
         delete temp;
     }
@@ -161,21 +161,21 @@ public:
 };
 
 
-class Stacks_PushEfficient
+class Stacks_PopEfficient
 {
 public:
     Queue *queue;
     Queue *temp;
     int size;
 
-    Stacks_PushEfficient(int capacity)
+    Stacks_PopEfficient(int capacity)
     {
         this->queue = new Queue(capacity);
         this->temp = new Queue(capacity);
         this->size = 0;
     }
 
-    ~Stacks_PushEfficient()
+    ~Stacks_PopEfficient()
     {
         delete queue;
         delete temp;
@@ -228,7 +228,7 @@ public:
 int main()
 {
 
-    Stacks_PopEfficient stack(3);
+    Stacks_PushEfficient stack(3);
     stack.Push(1);
     stack.Push(2);
     stack.Push(5);
