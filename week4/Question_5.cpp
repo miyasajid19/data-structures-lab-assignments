@@ -4,15 +4,15 @@
 
 using namespace std;
 
-class PushEfficientStack : public Queue<int> {
+class PopEfficientStack : public Queue<int> {
     Queue<int> *auxQueue;
 
 public:
-    PushEfficientStack(int capacity) : Queue<int>(capacity) {
+    PopEfficientStack(int capacity) : Queue<int>(capacity) {
         auxQueue = new Queue<int>(capacity);
     }
 
-    ~PushEfficientStack() {
+    ~PopEfficientStack() {
         delete auxQueue;
     }
 
@@ -55,17 +55,15 @@ public:
     }
 };
 
-class PopEfficientStack : public Queue<int> {
+class PushEfficientStack : public Queue<int> {
     Queue<int> *auxQueue;
 
 public:
-    PopEfficientStack(int capacity) : Queue<int>(capacity) {
+    PushEfficientStack(int capacity) : Queue<int>(capacity) {
         auxQueue = new Queue<int>(capacity);
     }
 
-    ~PopEfficientStack() {
-        delete auxQueue;
-    }
+
 
     void Push(int value) {
         if (this->isFull()) {
