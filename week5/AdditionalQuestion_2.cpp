@@ -37,23 +37,33 @@ Node *rotateByK(Node *head, int k)
     temp->next = nullptr;
     return head;
 }
-
 int main()
 {
-    // #ifndef ONLINE_JUDGE
-    //     freopen("../input.txt", "r", stdin);
-    //     freopen("../output.txt", "w", stdout);
-    // #endif
     linkedList list;
-    list.display();
 
-    for (int i = 0; i < 10; i++)
+    int numElements;
+    cout << "Enter the number of elements to insert into the linked list: ";
+    cin >> numElements;
+
+    cout << "Enter " << numElements << " elements:" << endl;
+    for (int i = 0; i < numElements; i++)
     {
-        list.InsertAtTail(i);
-        list.display();
+        int value;
+        cout << "Element " << i + 1 << ": ";
+        cin >> value;
+        list.InsertAtTail(value);
     }
 
-    list.head = rotateByK(list.head, 3);
+    cout << "The original linked list is: ";
+    list.display();
+
+    int k;
+    cout << "Enter the number of rotations (k): ";
+    cin >> k;
+
+    list.head = rotateByK(list.head, k);
+
+    cout << "The linked list after rotating by " << k << " is: ";
     list.display();
 
     return EXIT_SUCCESS;
