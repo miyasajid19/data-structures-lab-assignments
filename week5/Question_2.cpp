@@ -48,7 +48,7 @@ int main()
     linkedList ans = removeKey(ll.head, key, count);
 
     cout << "Results: " << endl;
-    cout << "The total number of nodes with the key value " << key << " removed: " << count << endl;
+    cout << "The total number of nodes with the key value " << key << " removed:: " << count << endl;
     
     cout << "The updated linked list is: ";
     ans.display();
