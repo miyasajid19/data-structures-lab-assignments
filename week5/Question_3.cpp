@@ -15,17 +15,31 @@ Node *findMiddleNode(Node *head)
 }
 int main()
 {
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
     linkedList ll;
-    for (int i = 1; i <= 6; i++)
+
+    int numElements;
+    cout << "Enter the number of elements for the linked list: ";
+    cin >> numElements;
+
+    cout << "Enter the elements for the linked list:" << endl;
+    for (int i = 0; i < numElements; i++)
     {
-        ll.InsertAtTail(i);
+        int value;
+        cout << "Element " << i + 1 << ": ";
+        cin >> value;
+        ll.InsertAtTail(value);
         ll.display();
     }
+
     Node *middleNode = findMiddleNode(ll.head);
-    cout << "The middle Node is  :: " << middleNode->value << endl;
+    if (middleNode)
+    {
+        cout << "The middle node is: " << middleNode->value << endl;
+    }
+    else
+    {
+        cout << "The linked list is empty, no middle node found." << endl;
+    }
+
     return EXIT_SUCCESS;
 }
