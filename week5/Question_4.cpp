@@ -8,12 +8,23 @@ Node *reverseLinkedList(Node *&head)
     Node *CurrentPointer = head;
     while (CurrentPointer != nullptr)
     {
-        Node *Nextpointer = CurrentPointer->next;
+        Node *nextpointer = CurrentPointer->next;
         CurrentPointer->next = PreviousPointer;
         PreviousPointer = CurrentPointer;
-        CurrentPointer = Nextpointer;
+        CurrentPointer = nextpointer;
     }
     Node *new_head = PreviousPointer;
+    return new_head;
+}
+Node* reverseRecurrsion(Node* &head)
+{
+    if (head==NULL  or head->next==NULL)
+    {
+        return head;
+    }
+    Node* new_head=reverseRecurrsion(head->next);
+    head->next->next=head;
+    head->next=NULL;
     return new_head;
 }
 int main()
@@ -32,6 +43,8 @@ int main()
     ll.InsertAtTail(4);
     ll.display();
     ll.head = reverseLinkedList(ll.head);
+    ll.display();
+    ll.head=reverseLinkedList(ll.head);
     ll.display();
     return EXIT_SUCCESS;
 }
