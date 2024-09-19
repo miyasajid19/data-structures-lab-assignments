@@ -63,7 +63,7 @@ public:
         }
         Node *temp = head;
         int count = 0;
-        while (temp->Next != nullptr and count < index)
+        while (temp != nullptr and count < index - 1)
         {
             temp = temp->Next;
             count++;
@@ -105,7 +105,7 @@ public:
         }
         int counter = 0;
         Node *temp = tail;
-        while (temp != nullptr and counter < index)
+        while (temp != nullptr and counter < index - 1)
         {
             temp = temp->Previous;
             counter++;
@@ -127,8 +127,110 @@ public:
             head = new_node;
         }
 
-        temp->Previous = new_node;
         temp->Previous->Next = new_node;
+        temp->Previous = new_node;
+    }
+    void DeleteHead()
+    {
+        if (head == nullptr)
+        {
+            cout << "linked list is already empty" << endl;
+            return;
+        }
+        Node *temp = head;
+        head = head->Next;
+        if (head)
+        {
+            head->Previous = nullptr;
+        }
+        else
+        {
+            tail = nullptr;
+        }
+        delete temp;
+    }
+    void DeleteTail()
+    {
+        if (tail == nullptr)
+        {
+            cout << "linked list is already empty" << endl;
+            return;
+        }
+        Node *temp = tail;
+        tail = tail->Previous;
+        if (tail)
+        {
+            tail->Next = nullptr;
+        }
+        else
+        {
+            head = nullptr;
+        }
+        delete temp;
+    }
+    void deleteFromHead(int index)
+    {
+        if (index < 0)
+        {
+            cout << "invalid indexing" << endl;
+            return;
+        }
+        Node *temp = head;
+        int counter = 0;
+        while (temp != nullptr and counter < index)
+        {
+            temp = temp->Next;
+            counter++;
+        }
+        if (temp == nullptr)
+        {
+            cout << "invalid indexing" << endl;
+            return;
+        }
+        if (temp == tail)
+        {
+            DeleteTail();
+            return;
+        }
+        if (temp->Previous != nullptr)
+            temp->Previous->Next = temp->Next;
+
+        if (temp->Next != nullptr)
+            temp->Next->Previous = temp->Previous;
+
+        delete temp;
+    }
+    void deleteFromTail(int index)
+    {
+        if (index < 0)
+        {
+            cout << "invalid indexing" << endl;
+            return;
+        }
+        Node *temp = tail;
+        int counter = 0;
+        while (temp != nullptr and counter < index)
+        {
+            temp = temp->Previous;
+            counter++;
+        }
+        if (temp == nullptr)
+        {
+            cout << "invalid indexing" << endl;
+            return;
+        }
+        if (temp == head)
+        {
+            DeleteHead();
+            return;
+        }
+        if (temp->Next != nullptr)
+            temp->Next->Previous = temp->Previous;
+
+        if (temp->Previous != nullptr)
+            temp->Previous->Next = temp->Next;
+
+        delete temp;
     }
     void display()
     {
@@ -146,20 +248,61 @@ public:
         }
         cout << "  nullptr" << endl;
     }
+    void Reverse_display()
+    {
+        if (tail == nullptr)
+        {
+            cout << "linked list is empty" << endl;
+            return;
+        }
+        Node *temp = tail;
+        cout << "nullptr <--> ";
+        while (temp != nullptr)
+        {
+            cout << temp->Value << " <--> ";
+            temp = temp->Previous;
+        }
+        cout << "  nullptr" << endl;
+    }
 };
 int main()
 {
     DoubleList dl;
-    dl.InsertAtHead(2);
     dl.display();
+    dl.Reverse_display();
     dl.InsertAtHead(1);
     dl.display();
-    dl.InsertAtTail(3);
+    dl.Reverse_display();
+    dl.InsertAtTail(4);
     dl.display();
-    dl.InsertFromHead(432, 1);
+    dl.Reverse_display();
+    dl.InsertFromHead(2, 1);
     dl.display();
-    dl.InsertFromHead(432, 1);
+    dl.Reverse_display();
+    dl.InsertFromTail(3, 1);
     dl.display();
-    dl.InsertFromTail(433, 1);
+    dl.Reverse_display();
+    dl.DeleteHead();
     dl.display();
+    dl.Reverse_display();
+    dl.DeleteTail();
+    dl.display();
+    dl.Reverse_display();
+    dl.InsertAtHead(0);
+    dl.InsertAtHead(1);
+    dl.InsertAtHead(2);
+    dl.display();
+    dl.Reverse_display();
+    dl.deleteFromHead(1);
+    dl.display();
+    dl.Reverse_display();
+    dl.deleteFromTail(1);
+    dl.display();
+    dl.Reverse_display();
+    dl.deleteFromTail(1);
+    dl.display();
+    dl.Reverse_display();
+    dl.deleteFromTail(1);
+    dl.display();
+    dl.Reverse_display();
 }
