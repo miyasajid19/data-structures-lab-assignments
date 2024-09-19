@@ -53,7 +53,7 @@ public:
     {
         if (index < 0)
         {
-            cout << "invalid indexing" << endl;
+            InsertFromTail(value, -index);
             return;
         }
         if (index == 0)
@@ -95,7 +95,7 @@ public:
     {
         if (index < 0)
         {
-            cout << "invalid indexing" << endl;
+            InsertFromHead(value, -index);
             return;
         }
         if (index == 0)
@@ -263,6 +263,48 @@ public:
             temp = temp->Previous;
         }
         cout << "  nullptr" << endl;
+    }
+    int searchFromHead(int value)
+    {
+        Node *temp = head;
+        int count = 0;
+        while (temp)
+        {
+            if (temp->Value == value)
+            {
+                return count;
+            }
+            temp = temp->Next;
+            count++;
+        }
+        return -1;
+    }
+    int searchFromTail(int value)
+    {
+        Node *temp = tail;
+        int count = 0;
+        while (temp)
+        {
+            if (temp->Value == value)
+            {
+                return count;
+            }
+            temp = temp->Previous;
+            count++;
+        }
+        return -1;
+    }
+    void Insert(int value)
+    {
+        InsertAtTail(value);
+    }
+    void Delete()
+    {
+        DeleteTail();
+    }
+    int search(int value)
+    {
+        return searchFromHead(value);
     }
 };
 int main()
