@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <stack>
 #include <string>
-#include <sstream>
 #include <cmath>
 
 using namespace std;
@@ -55,38 +54,28 @@ float Result(float a, float b, const string &op)
 float evaluatePostfix(const string &str)
 {
     stack<float> stk;
-    istringstream iss(str);
-    string token;
 
-    while (iss >> token)
+    for (auto x : str)
     {
-        // Check if the token is a number
-        if (isdigit(token[0]) || (token.size() > 1 && token[0] == '-'))
+        // If the character is a digit (0-9)
+        if (isdigit(x))
         {
-            stk.push(stof(token)); // Convert string to float
+            stk.push(x - '0'); // Convert char to float (e.g., '3' -> 3.0)
         }
-        else
+        else if (isspace(x))
         {
-            if (stk.size() < 2)
-            {
-                cout << "Error: Insufficient values in the expression!" << endl;
-                return 0;
-            }
+            continue; // Skip spaces
+        }
+        else // Otherwise, it's an operator
+        {
             float second = stk.top();
             stk.pop();
             float first = stk.top();
             stk.pop();
-            float result = Result(first, second, token);
-            stk.push(result);
+            float answer = Result(first, second, string(1, x));
+            stk.push(answer);
         }
     }
-
-    if (stk.size() != 1)
-    {
-        cout << "Error: The expression is not valid!" << endl;
-        return 0;
-    }
-
     return stk.top();
 }
 
@@ -96,7 +85,7 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    cout << "Enter the postfix expression (space-separated): " << endl;
+    cout << "Enter the postfix expression (single digits only): " << endl;
     string str;
     getline(cin, str);
     float result = evaluatePostfix(str);
