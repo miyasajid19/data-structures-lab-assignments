@@ -79,7 +79,6 @@ int main()
     cout << "Enter the infix exppression : " << endl;
     string str;
     getline(cin, str);
-    cout << "the equivalennt pretfix operation is  :: " << infixToPrefix(str);
+    cout << "the equivalennt prefix operation is  :: " << infixToPrefix(str);
     return EXIT_SUCCESS;
 }
-// +A-B+*C/DE%-/^EF*GG*IJL
