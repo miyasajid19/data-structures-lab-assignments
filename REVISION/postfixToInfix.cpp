@@ -3,25 +3,6 @@
 #include <stack>
 #include <string>
 using namespace std;
-int precedence(char x)
-{
-    if (x == '^')
-    {
-        return 3;
-    }
-    else if (x == '*' or x == '/' or x == '%')
-    {
-        return 2;
-    }
-    else if (x == '+' or x == '-')
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
 string postfixToInfix(string str)
 {
     stack<string> stk;
