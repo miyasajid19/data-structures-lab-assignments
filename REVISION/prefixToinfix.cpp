@@ -4,9 +4,9 @@
 #include <string>
 #include <algorithm>
 using namespace std;
-string postfixToInfix(string str)
+string prefixToInfix(string str)
 {
-    reverse(str.begin(),str.end());
+    reverse(str.begin(), str.end());
     stack<string> stk;
     string result;
     for (char x : str)
@@ -34,9 +34,9 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    cout << "Enter the infix exppression : " << endl;
+    cout << "Enter the prefix exppression : " << endl;
     string str;
     getline(cin, str);
-    cout << "the equivalennt postfix operation is  :: " << postfixToInfix(str);
+    cout << "the equivalennt infix operation is  :: " << prefixToInfix(str);
     return EXIT_SUCCESS;
 }
