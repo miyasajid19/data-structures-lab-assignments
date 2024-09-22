@@ -71,18 +71,29 @@ public:
     }
     void restack(int capacity)
     {
-        if (this->capacity > this->size)
+        if (this->capacity > capacity)
         {
             cout << "invalid capacity " << endl;
             return;
         }
         this->capacity = capacity;
+        int *newarr = new int[capacity];
+        for (int i = 0; i < size; i++)
+        {
+            newarr[i] = arr[i];
+        }
+        delete arr;
+        arr = newarr;
     }
     void Erase()
     {
         delete[] arr;
         this->size = 0;
         this->capacity = 0;
+    }
+    ~Stacks()
+    {
+        delete[] arr;
     }
 };
 int main()
@@ -91,24 +102,24 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-
-    int cap;
-    cout << "enter the capacity for the stacks :: " << endl;
-    cin >> cap;
-    Stacks stack(cap);
-    for (int i = 0; i < 7; i++)
+    Stacks stack(5);
+    for (int i = 0; i < 6; i++)
     {
-        int a;
-        cin >> a;
-        stack.Push(a);
+        stack.Push(i + 1);
         stack.Display();
     }
+    stack.restack(3);
+    stack.restack(7);
+    stack.Push(6);
+    stack.Display();
+    stack.Push(7);
+    stack.Display();
+
     for (int i = 0; i < 7; i++)
     {
-        cout << stack.Top() << " is in the top" << endl;
         stack.Pop();
+        cout << stack.Top() << " is in Top " << endl;
         stack.Display();
     }
-
     return EXIT_SUCCESS;
 }
