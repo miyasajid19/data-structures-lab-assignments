@@ -45,7 +45,44 @@ public:
             cout << "Stack underflow" << endl;
             return;
         }
-        
+        size--;
+    }
+    void Display()
+    {
+        if (isEmpty())
+        {
+            cout << "Stack is empty" << endl;
+            return;
+        }
+        for (int i = size - 1; i >= 0; i--)
+        {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+    int Top()
+    {
+        if (isEmpty())
+        {
+            cout << "stack is empty" << endl;
+            return INT_MIN;
+        }
+        return arr[this->size];
+    }
+    void restack(int capacity)
+    {
+        if (this->capacity > this->size)
+        {
+            cout << "invalid capacity " << endl;
+            return;
+        }
+        this->capacity = capacity;
+    }
+    void Erase()
+    {
+        delete[] arr;
+        this->size = 0;
+        this->capacity = 0;
     }
 };
 int main()
@@ -54,6 +91,24 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
+
+    int cap;
+    cout << "enter the capacity for the stacks :: " << endl;
+    cin >> cap;
+    Stacks stack(cap);
+    for (int i = 0; i < 7; i++)
+    {
+        int a;
+        cin >> a;
+        stack.Push(a);
+        stack.Display();
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        cout << stack.Top() << " is in the top" << endl;
+        stack.Pop();
+        stack.Display();
+    }
 
     return EXIT_SUCCESS;
 }
