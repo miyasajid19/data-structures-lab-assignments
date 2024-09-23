@@ -1,8 +1,6 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-
-// Function to generate binary representation of numbers from 1 to num-1
 queue<long long> allBits(long long int num)
 {
     queue<long long> result;
@@ -32,14 +30,12 @@ int main()
     freopen("output.txt", "w", stdout);
 #endif
 
-    // Generate binary representations of numbers from 1 to 9
     queue<long long> result = allBits(10);
 
-    // Print all binary numbers stored in the queue
     while (!result.empty())
     {
-        cout << result.front() <<endl; // Print the front element
-        result.pop();                  // Remove the front element
+        cout << result.front() <<endl; 
+        result.pop();                 
     }
 
     return EXIT_SUCCESS;
