@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 using namespace std;
+
 class Stacks
 {
     int *arr;
@@ -64,7 +65,7 @@ public:
             cout << "stack is empty" << endl;
             return INT_MIN;
         }
-        return this->arr[size];
+        return this->arr[size - 1]; // Corrected here
     }
     int getMinimum()
     {
@@ -72,9 +73,10 @@ public:
         {
             return INT_MIN;
         }
-        return this->minArr[size];
+        return this->minArr[size - 1]; // Corrected here
     }
 };
+
 int main()
 {
 #ifndef ONLINE_JUDGE
