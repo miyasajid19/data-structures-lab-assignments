@@ -29,17 +29,14 @@ string infixToPostfix(string str)
     string result;
     for (char x : str)
     {
-        // If operand (a-z, A-Z, 0-9), add it to the result
         if ((x >= 'a' and x <= 'z') or (x >= 'A' and x <= 'Z') or (x >= '0' and x <= '9'))
         {
             result += x;
         }
-        // If opening bracket, push it to stack
         else if (x == '(')
         {
             stk.push(x);
         }
-        // If closing bracket, pop till matching '(' is found
         else if (x == ')')
         {
             while (!stk.empty() and stk.top() != '(')
@@ -52,7 +49,6 @@ string infixToPostfix(string str)
                 stk.pop();
             }
         }
-        // Operator case
         else
         {
             while (!stk.empty() and precedence(x) <= precedence(stk.top()))
@@ -63,7 +59,6 @@ string infixToPostfix(string str)
             stk.push(x);
         }
     }
-    // Pop all remaining operators from the stack
     while (!stk.empty())
     {
         result += stk.top();
@@ -78,6 +73,10 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    cout << infixToPostfix("A+C*B/D^E-F%G");
+    cout << "Enter the infix exppression : " << endl;
+    string str;
+    getline(cin, str);
+    cout << "the equivalennt postfix operation is  :: " << infixToPostfix(str);
     return EXIT_SUCCESS;
 }
+//AB+CDE^*FG^*-HI-JK/LM^*+-
