@@ -1,87 +1,96 @@
 #include <iostream>
-#include <limits.h>
-
+#include <cstdlib>
+#include <cmath>
 using namespace std;
-
-class MinStack {
-    int *arr;         // Stack to store actual values
-    int *minArr;      // Stack to store the minimum values
-    int size;         // Current size of the stack
-    int capacity;     // Maximum capacity of the stack
+class Stacks
+{
+    int *arr;
+    int *minArr;
+    int size;
+    int capacity;
 
 public:
-    MinStack(int capacity = 100) {
-        this->capacity = capacity;
+    Stacks(int capacity)
+    {
         this->size = 0;
-        arr = new int[capacity];
-        minArr = new int[capacity];
+        this->capacity = capacity;
+        this->arr = new int[capacity]();
+        this->minArr = new int[capacity];
     }
-    
-    ~MinStack() {
-        delete[] arr;
-        delete[] minArr;
+    bool IsEmpty()
+    {
+        return this->size == 0;
     }
-
-    void push(int value) {
-        if (size >= capacity) {
-            cout << "Stack overflow" << endl;
+    bool IsFull()
+    {
+        return this->size == this->capacity;
+    }
+    int Size()
+    {
+        return this->size;
+    }
+    void Push(int value)
+    {
+        if (IsFull())
+        {
+            cout << "stack overflow" << endl;
             return;
         }
-        
+
         arr[size] = value;
-        if (size == 0) {
+        if (size == 0)
+        {
             minArr[size] = value;
-        } else {
+        }
+        else
+        {
             minArr[size] = min(value, minArr[size - 1]);
         }
         size++;
     }
-    
-    void pop() {
-        if (size == 0) {
-            cout << "Stack underflow" << endl;
+    void Pop()
+    {
+        if (IsEmpty())
+        {
+            cout << "stack underflow" << endl;
             return;
         }
-        size--;
+        this->size--;
     }
-    
-    int top() {
-        if (size == 0) {
+    int Top()
+    {
+        if (IsEmpty())
+        {
+            cout << "stack is empty" << endl;
             return INT_MIN;
         }
-        return arr[size - 1];
+        return this->arr[size];
     }
-    
-    int getMin() {
-        if (size == 0) {
+    int getMinimum()
+    {
+        if (size == 0)
+        {
             return INT_MIN;
         }
-        return minArr[size - 1];
+        return this->minArr[size];
     }
 };
-
-int main() {
-    int capacity;
-    cout << "Enter the capacity for stack: ";
-    cin >> capacity;
-    
-    MinStack stk(capacity);
-    
-    cout << "Enter " << capacity << " values to push onto the stack:" << endl;
-    for (int i = 0; i < capacity; i++) {
-        int num;
-        cin >> num;
-        stk.push(num);
-        cout << "Top: " << stk.top() << endl;
-        cout << "Minimum: " << stk.getMin() << endl << endl;
-    }
-    
-    cout << "Popping elements from the stack:" << endl;
-    for (int i = 0; i < capacity; i++) {
-        stk.pop();
-        cout << "Top: " << stk.top() << endl;
-        cout << "Minimum: " << stk.getMin() << endl << endl;
-    }
-
-    return 0;
+int main()
+{
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    Stacks stack(5);
+    stack.Push(1);
+    cout << endl
+         << stack.Top();
+    cout << endl
+         << stack.getMinimum();
+    stack.Push(2);
+    cout << endl
+         << stack.Top();
+    cout << endl
+         << stack.getMinimum();
+    return EXIT_SUCCESS;
 }
