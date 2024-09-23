@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
-
 class Queue
 {
     int *arr;
@@ -13,28 +12,24 @@ class Queue
 public:
     Queue(int capacity)
     {
-        this->size = 0; // Corrected the assignment here
+        this->size = 0;
         this->front = 0;
         this->back = -1;
         this->capacity = capacity;
         this->arr = new int[capacity];
     }
-
     bool isEmpty()
     {
         return this->size == 0;
     }
-
     bool isFull()
     {
         return this->size == this->capacity;
     }
-
     int Size()
     {
         return this->size;
     }
-
     void Enqueue(int value)
     {
         if (isFull())
@@ -46,7 +41,6 @@ public:
         this->arr[this->back] = value;
         this->size++;
     }
-
     void Dequeue()
     {
         if (isEmpty())
@@ -57,7 +51,6 @@ public:
         this->front++;
         this->size--;
     }
-
     int Peek()
     {
         if (isEmpty())
@@ -67,7 +60,6 @@ public:
         }
         return arr[front];
     }
-
     void Display()
     {
         if (isEmpty())
@@ -82,7 +74,6 @@ public:
         cout << endl;
     }
 };
-
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -93,18 +84,38 @@ int main()
     queue.Enqueue(1);
     cout << "Top : " << queue.Peek() << endl;
     queue.Display();
-
     queue.Enqueue(2);
     cout << "Top : " << queue.Peek() << endl;
     queue.Display();
-
     queue.Enqueue(3);
     cout << "Top : " << queue.Peek() << endl;
     queue.Display();
-
     queue.Enqueue(4);
     cout << "Top : " << queue.Peek() << endl;
     queue.Display();
-
+    queue.Enqueue(5);
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Enqueue(6);
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Dequeue();
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Dequeue();
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Dequeue();
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Dequeue();
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Dequeue();
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
+    queue.Enqueue(432);
+    cout << "Top : " << queue.Peek() << endl;
+    queue.Display();
     return EXIT_SUCCESS;
 }
