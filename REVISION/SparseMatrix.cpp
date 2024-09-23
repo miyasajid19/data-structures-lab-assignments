@@ -84,16 +84,101 @@ public:
             cout << sparseMatrix[i][2] << "\n";
         }
     }
+    SparseMatrix operator+(SparseMatrix A)
+    {
+        if (this->rows != A.rows or this->columns != A.columns)
+        {
+            cout << "Invalid matrix dimensions" << endl;
+            exit(1);
+        }
+        SparseMatrix result(this->rows, this->columns);
+        result.sparseMatrix[this->nonZeros + A.nonZeros][3];
+        result.sparseMatrix[0][0] = this->nonZeros + A.nonZeros;
+        result.sparseMatrix[0][1] = this->columns;
+        int index1 = 1, index2 = 1, index3 = 1;
+        while (index1 <= this->nonZeros and index2 <= A.nonZeros)
+        {
+            if (this->sparseMatrix[index1][0] == A.sparseMatrix[index2][0])
+            {
+                if (this->sparseMatrix[index1][1] == A.sparseMatrix[index2][1])
+                {
+                    result.sparseMatrix[index3][0] = this->sparseMatrix[index1][0];
+                    result.sparseMatrix[index3][1] = this->sparseMatrix[index1][1];
+                    result.sparseMatrix[index3][2] = this->sparseMatrix[index1][2] + A.sparseMatrix[index2][2];
+                    index1++;
+                    index2++;
+                    index3++;
+                }
+                else if (this->sparseMatrix[index1][0] < A.sparseMatrix[index2][0])
+                {
+                    result.sparseMatrix[index3][0] = this->sparseMatrix[index1][0];
+                    result.sparseMatrix[index3][1] = this->sparseMatrix[index1][1];
+                    result.sparseMatrix[index3][2] = this->sparseMatrix[index1][2];
+                    index1++;
+                    index3++;
+                }
+                else
+                {
+                    result.sparseMatrix[index3][0] = A.sparseMatrix[index2][0];
+                    result.sparseMatrix[index3][1] = A.sparseMatrix[index2][1];
+                    result.sparseMatrix[index3][2] = A.sparseMatrix[index2][2];
+                    index2++;
+                    index3++;
+                }
+            }
+            else if (this->sparseMatrix[index1][0] < A.sparseMatrix[index2][0])
+            {
+                result.sparseMatrix[index3][0] = this->sparseMatrix[index1][0];
+                result.sparseMatrix[index3][1] = this->sparseMatrix[index1][1];
+                result.sparseMatrix[index3][2] = this->sparseMatrix[index1][2];
+                index1++;
+                index3++;
+            }
+            else
+            {
+
+                result.sparseMatrix[index3][0] = A.sparseMatrix[index2][0];
+                result.sparseMatrix[index3][1] = A.sparseMatrix[index2][1];
+                result.sparseMatrix[index3][2] = A.sparseMatrix[index2][2];
+                index2++;
+                index3++;
+            }
+        }
+        while (index1 <= this->nonZeros)
+        {
+            result.sparseMatrix[index3][0] = this->sparseMatrix[index1][0];
+            result.sparseMatrix[index3][2] = this->sparseMatrix[index1][2];
+            result.sparseMatrix[index3][1] = this->sparseMatrix[index1][1];
+            index1++;
+            index3++;
+        }
+        while (index2 <= A.nonZeros)
+        {
+            result.sparseMatrix[index3][0] = this->sparseMatrix[index2][0];
+            result.sparseMatrix[index3][2] = this->sparseMatrix[index2][2];
+            result.sparseMatrix[index3][1] = this->sparseMatrix[index2][1];
+            index2++;
+            index3++;
+        }
+        result.sparseMatrix[0][2] = index3 - 1;
+        return result;
+    }
 };
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     // freopen("output.txt", "w", stdout);
+    // #endif
     SparseMatrix mat(3, 3);
     mat.setMatrix();
     mat.SparseIt();
     mat.DisplaySparse();
+    SparseMatrix mat1(3, 3);
+    mat1.setMatrix();
+    mat1.SparseIt();
+    mat1.DisplaySparse();
+    SparseMatrix result = mat1 + mat;
+    result.DisplaySparse();
     return EXIT_SUCCESS;
 }
