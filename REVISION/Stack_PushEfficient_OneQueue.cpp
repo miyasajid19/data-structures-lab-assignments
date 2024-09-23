@@ -1,7 +1,7 @@
 #include <iostream>
-#include <cstdlib>
 #include <queue>
 using namespace std;
+
 class Stack
 {
     int size;
@@ -14,14 +14,18 @@ public:
         this->capacity = capacity;
         this->size = 0;
     }
+
     bool isEmpty()
     {
         return this->size == 0;
     }
+
     bool isFull()
     {
         return this->size == this->capacity;
     }
+
+    // Push-efficient stack implementation
     void Push(int value)
     {
         if (isFull())
@@ -29,11 +33,10 @@ public:
             cout << "stack overflow" << endl;
             return;
         }
-
-        Queue.push(value);
-
+        Queue.push(value); // Just push the value directly
         this->size++;
     }
+
     void Pop()
     {
         if (isEmpty())
@@ -41,14 +44,18 @@ public:
             cout << "stack underflow" << endl;
             return;
         }
-        for (int i = 0; i < this->size; i++)
+
+        // To pop the last added element, rotate the queue to get the last element in front
+        int n = this->size;
+        for (int i = 0; i < n - 1; i++)
         {
             Queue.push(Queue.front());
             Queue.pop();
         }
-        Queue.pop();
+        Queue.pop(); // Pop the "last-in" element
         this->size--;
     }
+
     int Top()
     {
         if (isEmpty())
@@ -56,8 +63,22 @@ public:
             cout << "stack is empty" << endl;
             return -1;
         }
-        return this->Queue.back();
+
+        // Rotate queue to access the last added element, which is the "top" of the stack
+        int n = this->size;
+        for (int i = 0; i < n - 1; i++)
+        {
+            Queue.push(Queue.front());
+            Queue.pop();
+        }
+
+        int topElement = Queue.front();
+        Queue.push(Queue.front()); // Move the top element back to the queue
+        Queue.pop();
+
+        return topElement;
     }
+
     void Display()
     {
         if (isEmpty())
@@ -65,7 +86,8 @@ public:
             cout << "stack is empty" << endl;
             return;
         }
-        queue<int> temp = Queue;
+
+        queue<int> temp = Queue; // Copy the queue for display purposes
         while (!temp.empty())
         {
             cout << temp.front() << " ";
@@ -74,12 +96,9 @@ public:
         cout << endl;
     }
 };
+
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
     Stack stk(5);
 
     cout << "Pushing elements into the stack:\n";
@@ -91,7 +110,7 @@ int main()
     }
 
     cout << "Attempting to push when stack is full:\n";
-    stk.Push(6);
+    stk.Push(6); // This should trigger stack overflow
 
     cout << "\nTop of the stack: " << stk.Top() << endl;
 
@@ -112,7 +131,7 @@ int main()
     stk.Display();
 
     cout << "Attempting to pop from an empty stack:\n";
-    stk.Pop();
+    stk.Pop(); // This should trigger stack underflow
 
     return EXIT_SUCCESS;
 }
