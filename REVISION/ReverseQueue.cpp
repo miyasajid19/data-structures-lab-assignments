@@ -34,7 +34,7 @@ int main()
         temp.pop();
     }
     cout << endl;
-    cout << "ReversedF Queue ::: ";
+    cout << "Reversed Queue ::: ";
     Reverse(Q);
     temp = Q;
     while (!temp.empty())
