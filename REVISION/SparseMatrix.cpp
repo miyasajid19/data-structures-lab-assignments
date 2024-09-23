@@ -186,7 +186,7 @@ int main()
     mat1.setMatrix();
     mat1.SparseIt();
     mat1.DisplaySparse();
-    SparseMatrix result = mat1 + mat;
+    SparseMatrix result = mat1 + mat + mat;
     result.DisplaySparse();
     return EXIT_SUCCESS;
 }
