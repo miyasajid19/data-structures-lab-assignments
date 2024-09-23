@@ -83,16 +83,31 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    Stacks stack(5);
-    stack.Push(1);
-    cout << endl
-         << stack.Top();
-    cout << endl
-         << stack.getMinimum();
-    stack.Push(2);
-    cout << endl
-         << stack.Top();
-    cout << endl
-         << stack.getMinimum();
-    return EXIT_SUCCESS;
+    int capacity;
+    cout << "Enter the capacity for stack: ";
+    cin >> capacity;
+
+    Stacks stk(capacity);
+
+    cout << "Enter " << capacity << " values to push onto the stack:" << endl;
+    for (int i = 0; i < capacity; i++)
+    {
+        int num;
+        cin >> num;
+        stk.Push(num);
+        cout << "Top: " << stk.Top() << endl;
+        cout << "Minimum: " << stk.getMinimum() << endl
+             << endl;
+    }
+
+    cout << "Popping elements from the stack:" << endl;
+    for (int i = 0; i < capacity; i++)
+    {
+        stk.Pop();
+        cout << "Top: " << stk.Top() << endl;
+        cout << "Minimum: " << stk.getMinimum() << endl
+             << endl;
+    }
+
+    return 0;
 }
