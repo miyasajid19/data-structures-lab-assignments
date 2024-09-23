@@ -72,7 +72,7 @@ int main()
         }
         pages.push(page);
     }
-    cout << "how many frames do you want to give??" << endl;
+    cout << "How many frames do you want to give??" << endl;
     int frame;
     cin >> frame;
     pageReplacementAlgo(pages, frame);
