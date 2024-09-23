@@ -24,9 +24,9 @@ public:
     }
     void Push(int value)
     {
-        if (isEmpty())
+        if (isFull())
         {
-            cout << "stack is empty" << endl;
+            cout << "stack overflow" << endl;
             return;
         }
 
