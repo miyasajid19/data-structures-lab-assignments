@@ -73,10 +73,10 @@ void display(queue<int> q)
 
 int main()
 {
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-    #endif // !ONLINE_JUDGE
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif // !ONLINE_JUDGE
     queue<int> q;
     q.push(3);
     q.push(1);
