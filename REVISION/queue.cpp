@@ -81,41 +81,20 @@ int main()
     freopen("output.txt", "w", stdout);
 #endif
     Queue queue(5);
-    queue.Enqueue(1);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Enqueue(2);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Enqueue(3);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Enqueue(4);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Enqueue(5);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Enqueue(6);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Dequeue();
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Dequeue();
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Dequeue();
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Dequeue();
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Dequeue();
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
-    queue.Enqueue(432);
-    cout << "Top : " << queue.Peek() << endl;
-    queue.Display();
+    for (int i = 0; i < 6; i++)
+    {
+        queue.Enqueue(i + 1);
+        cout << queue.Peek() << endl;
+        queue.Display();
+        cout << endl;
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        queue.Dequeue();
+        cout << queue.Peek() << endl;
+        queue.Display();
+        cout << endl;
+    }
+
     return EXIT_SUCCESS;
 }
