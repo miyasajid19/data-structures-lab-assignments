@@ -78,11 +78,14 @@ int main()
     freopen("output.txt", "w", stdout);
 #endif // !ONLINE_JUDGE
     queue<int> q;
-    q.push(3);
-    q.push(1);
+    q.push(407);
+    q.push(432);
+    q.push(8);
+    q.push(13);
     q.push(4);
-    q.push(-2);
-    q.push(0);
+    q.push(1);
+    q.push(2062);
+    q.push(2061);
 
     cout << "Original queue: ";
     display(q);
