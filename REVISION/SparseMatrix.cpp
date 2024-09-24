@@ -1,7 +1,15 @@
 #include <iostream>
-#include<cstdlib>
+#include <cstdlib>
 using namespace std;
-
+class SparseMatrix
+{
+    int **arr;
+    int **SparseMatrix;
+    int **TransposeSparse;
+    int rows;
+    int columns;
+    int nonZeros;
+};
 int main()
 {
 #ifndef ONLINE_JUDGE
