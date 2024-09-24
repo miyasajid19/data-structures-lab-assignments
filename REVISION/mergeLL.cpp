@@ -49,30 +49,26 @@ public:
         }
         cout << "nullptr" << endl;
     }
-    void Merge(LinkedLists other)
+
+    void Merge(LinkedLists &other)
     {
-        Node *temp1 = this->head;
-        Node *temp2 = other.head;
-        if (other.head == nullptr)
+        if (other.head == nullptr) // If the second list is empty, do nothing
         {
             return;
         }
-        if (head != nullptr)
+
+        if (this->head == nullptr) // If the current list is empty, simply point to the other list
         {
             this->head = other.head;
             return;
         }
-        while (temp1->Next != nullptr)
+
+        Node *temp1 = this->head;
+        while (temp1->Next != nullptr) // Traverse to the end of the current list
         {
             temp1 = temp1->Next;
         }
-        while (temp2->Next != nullptr)
-        {
-            temp1->Next = temp2;
-            temp2 = temp2->Next;
-        }
-        temp1->Next = nullptr;
-        this->head = temp1;
+        temp1->Next = other.head; // Attach the other list to the end of the current list
     }
 };
 
@@ -82,18 +78,32 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif // !online_judge
-    cout << boolalpha;
-    LinkedLists list;
-    list.Push(4);
-    list.Push(1);
-    list.Push(8);
-    list.Push(13);
-    list.Push(2062);
-    list.Push(2061);
-    list.Push(407);
-    list.Push(432);
-    list.Display();
-    list.Merge(list);
-    list.Display();
+
+    LinkedLists list1;
+    list1.Push(4);
+    list1.Push(1);
+    list1.Push(8);
+    list1.Push(13);
+
+    LinkedLists list2;
+    list2.Push(2062);
+    list2.Push(2061);
+    list2.Push(407);
+    list2.Push(432);
+
+    // Display both lists
+    cout << "List 1: ";
+    list1.Display();
+
+    cout << "List 2: ";
+    list2.Display();
+
+    // Merge list2 into list1
+    list1.Merge(list2);
+
+    // Display merged list
+    cout << "Merged List: ";
+    list1.Display();
+
     return EXIT_SUCCESS;
 }
