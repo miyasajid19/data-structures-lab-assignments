@@ -139,8 +139,29 @@ public:
             deleteFromHead();
             return;
         }
-        int counter=0;
-        
+        int counter = 0;
+        Node *temp = head;
+        while (temp->Next != head and counter < index - 1)
+        {
+            temp = temp->Next;
+            counter++;
+        }
+        if (temp->Next == head and counter < index - 1)
+        {
+            DeleteFromTail();
+            return;
+        }
+        if (counter < index - 1)
+        {
+            Node *todelete = temp->Next;
+            temp->Next = temp->Next->Next;
+            delete temp;
+        }
+        else
+        {
+            cout << "invalid indexing";
+            return;
+        }
     }
     void Display()
     {
@@ -185,5 +206,6 @@ int main()
     list.Display();
     list.DeleteFromTail();
     list.Display();
+    list.Delete(1);
     return EXIT_SUCCESS;
 }
