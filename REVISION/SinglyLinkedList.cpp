@@ -57,9 +57,10 @@ public:
         Node *new_node = new Node(value);
         int counter = 0;
         Node *temp = head;
-        while (temp != nullptr and counter <= index)
+        while (temp != nullptr and counter < index-1)
         {
             temp = temp->Next;
+            counter++;
         }
         if (temp == nullptr)
         {
@@ -70,6 +71,16 @@ public:
         new_node->Next = temp->Next;
         temp->Next = new_node;
     }
+    void Display()
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->Value << "->";
+            temp = temp->Next;
+        }
+        cout << "nullptr"<<endl;
+    }
 };
 int main()
 {
@@ -77,6 +88,20 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-
+    LinkedLists lists;
+    lists.InsertAtHead(3);
+    lists.Display();
+    lists.InsertAtHead(2);
+    lists.Display();
+    lists.InsertAtHead(1);
+    lists.Display();
+    lists.InsertAtTail(5);
+    lists.Display();
+    lists.InsertAtTail(6);
+    lists.Display();
+    lists.InsertAtTail(7);
+    lists.Display();
+    lists.Insert(4,3);
+    lists.Display();
     return EXIT_SUCCESS;
 }
