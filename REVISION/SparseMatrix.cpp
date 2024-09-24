@@ -23,7 +23,20 @@ public:
     }
     void setMatrix()
     {
+        int count = 0;
+        for (int i = 0; i < this->rows; i++)
+        {
+            for (int j = 0; j < this->columns; j++)
+            {
+                cout << "Arr[" << i << "][" << j << "] :: " << endl;
+                cin >> arr[i][j];
+                if (arr[i][j] != 0)
+                    count++;
+            }
+        }
+        this->nonZeros = count++;
     }
+    
 };
 int main()
 {
