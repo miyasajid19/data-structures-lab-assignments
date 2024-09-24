@@ -201,7 +201,7 @@ public:
         }
         Node *temp = head;
         int counter = 0;
-        while (temp->Next != head and counter <= index)
+        while (temp->Next != head and counter < index)
         {
             temp = temp->Next;
             counter++;
@@ -261,6 +261,18 @@ int main()
     list.updateTail(407);
     list.Display();
     list.Update(407432, 0);
+    list.Display();
+    list.InsertAtTail(2);
+    list.InsertAtTail(3);
+    list.InsertAtTail(4);
+    list.Display();
+    list.updateTail(7);
+    list.Display();
+    list.updateHead(2062);
+    list.Display();
+    list.Update(2061, 1);
+    list.Display();
+    list.Update(13, 2);
     list.Display();
     return EXIT_SUCCESS;
 }
