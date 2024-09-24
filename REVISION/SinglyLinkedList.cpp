@@ -57,7 +57,7 @@ public:
         Node *new_node = new Node(value);
         int counter = 0;
         Node *temp = head;
-        while (temp != nullptr and counter < index-1)
+        while (temp != nullptr and counter < index - 1)
         {
             temp = temp->Next;
             counter++;
@@ -71,6 +71,27 @@ public:
         new_node->Next = temp->Next;
         temp->Next = new_node;
     }
+    void update(int value, int index)
+    {
+        if (index == 0)
+        {
+            InsertAtHead(value);
+            return;
+        }
+        int counter = 0;
+        Node *temp = head;
+        while (temp != nullptr and counter < index )
+        {
+            temp = temp->Next;
+            counter++;
+        }
+        if (temp == nullptr)
+        {
+            cout << "invlaid indexing" << endl;
+            return;
+        }
+        temp->Value=value;
+    }
     void Display()
     {
         Node *temp = head;
@@ -79,7 +100,7 @@ public:
             cout << temp->Value << "->";
             temp = temp->Next;
         }
-        cout << "nullptr"<<endl;
+        cout << "nullptr" << endl;
     }
 };
 int main()
@@ -101,7 +122,9 @@ int main()
     lists.Display();
     lists.InsertAtTail(7);
     lists.Display();
-    lists.Insert(4,3);
+    lists.Insert(432, 3);
+    lists.Display();
+    lists.update(4, 3);
     lists.Display();
     return EXIT_SUCCESS;
 }
