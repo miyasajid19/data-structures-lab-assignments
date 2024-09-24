@@ -38,7 +38,6 @@ int main()
     string str;
     cout << "enter string ::";
     cin >> str;
-    
     cout<<NonRepeating(str);
     return EXIT_SUCCESS;
 }
