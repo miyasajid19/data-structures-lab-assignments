@@ -121,6 +121,83 @@ public:
         }
         cout << "nullptr" << endl;
     }
+    void DeleteFromHead()
+    {
+        if (head == nullptr)
+        {
+            cout << "linked list is empty" << endl;
+            return;
+        }
+        Node *temp = head;
+        if (head->Next == nullptr)
+        {
+            head = nullptr;
+        }
+        else
+        {
+            head = head->Next;
+        }
+        delete temp;
+    }
+    void DeleteFromTail()
+    {
+        if (head == nullptr)
+        {
+            cout << "linked list is empty" << endl;
+            return;
+        }
+        if (head->Next == nullptr)
+        {
+            DeleteFromHead();
+            return;
+        }
+        Node *temp = head;
+        while (temp->Next->Next != nullptr)
+        {
+            temp = temp->Next;
+        }
+        Node *toDelete = temp->Next;
+        temp->Next = temp->Next->Next;
+        delete toDelete;
+    }
+    void Delete(int index)
+    {
+        if (index < 0)
+        {
+            cout << "invalid indexing" << endl;
+            return;
+        }
+        if (head == nullptr)
+        {
+            cout << "linked list is empty" << endl;
+            return;
+        }
+        if (index == 0)
+        {
+            DeleteFromHead();
+            return;
+        }
+        Node *temp = head;
+        int counter = 0;
+        while (temp != nullptr and counter < index - 1)
+        {
+            temp = temp->Next;
+            counter++;
+        }
+        if (temp == nullptr)
+        {
+            cout << "invalid indexing" << endl;
+            return;
+        }
+        if (temp->Next == nullptr)
+        {
+            DeleteFromTail();
+            return;
+        }
+        Node *toDelete = temp->Next;
+        temp->Next = temp->Next->Next;
+        delete toDelete;
+    }
 };
 int main()
 {
@@ -144,6 +221,28 @@ int main()
     lists.Insert(432, 3);
     lists.Display();
     lists.Update(4, 3);
+    lists.Display();
+    lists.DeleteFromHead();
+    lists.Display();
+    lists.DeleteFromTail();
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
+    lists.Display();
+    lists.Delete(1);
     lists.Display();
     return EXIT_SUCCESS;
 }
