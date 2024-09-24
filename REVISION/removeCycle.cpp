@@ -49,6 +49,7 @@ public:
         }
         cout << "nullptr" << endl;
     }
+
     bool CheckCycle()
     {
         if (head == nullptr)
@@ -57,40 +58,53 @@ public:
         }
         Node *slowPointer = head;
         Node *fastPointer = head;
-        while (fastPointer and fastPointer->Next)
+        while (fastPointer && fastPointer->Next)
         {
             slowPointer = slowPointer->Next;
             fastPointer = fastPointer->Next->Next;
             if (slowPointer == fastPointer)
             {
-                cout << "cyclic at :: " << slowPointer->Value << " Node" << endl;
                 return true;
             }
         }
         return false;
     }
+
     void RemoveCycle()
     {
-        if (CheckCycle())
+        Node *slowPointer = head;
+        Node *fastPointer = head;
+        bool hasCycle = false;
+
+        while (fastPointer && fastPointer->Next)
         {
-            Node *slowPointer = head;
-            Node *fastPointer = head;
-            do
+            slowPointer = slowPointer->Next;
+            fastPointer = fastPointer->Next->Next;
+            if (slowPointer == fastPointer)
             {
-                slowPointer = slowPointer->Next;
-                fastPointer = fastPointer->Next->Next;
-                if (fastPointer == slowPointer)
-                {
-                    slowPointer->Next = nullptr;
-                    break;
-                }
-            } while (slowPointer != fastPointer);
-            cout << "The linked list is no longer cyclic" << endl;
+                hasCycle = true;
+                break;
+            }
         }
-        else
+
+        if (!hasCycle)
         {
             cout << "The linked list is not cyclic" << endl;
+            return;
         }
+
+        slowPointer = head;
+        if (slowPointer != fastPointer)
+        {
+            while (slowPointer->Next != fastPointer->Next)
+            {
+                slowPointer = slowPointer->Next;
+                fastPointer = fastPointer->Next;
+            }
+        }
+        
+        fastPointer->Next = nullptr;
+        cout << "The linked list is no longer cyclic" << endl;
     }
 };
 
@@ -99,7 +113,7 @@ int main()
 #ifndef online_judge
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-#endif // !online_judge
+#endif
 
     LinkedLists list1;
     list1.Push(4);
@@ -110,14 +124,17 @@ int main()
     list1.Push(2061);
     list1.Push(407);
     list1.Push(432);
+
     cout << boolalpha;
     cout << list1.CheckCycle() << endl;
     list1.Display();
-    list1.RemoveCycle();
-    list1.head->Next->Next->Next->Next->Next->Next->Next->Next = list1.head->Next->Next->Next->Next->Next->Next;
+    
+    list1.head->Next->Next->Next->Next->Next->Next->Next->Next = list1.head->Next->Next->Next;
+
     cout << list1.CheckCycle() << endl;
     list1.RemoveCycle();
     list1.Display();
     cout << list1.CheckCycle() << endl;
+
     return EXIT_SUCCESS;
 }
