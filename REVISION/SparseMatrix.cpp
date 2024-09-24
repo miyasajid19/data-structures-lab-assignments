@@ -5,6 +5,7 @@ class SparseMatrix
 {
     int **arr;
     int **sparseMatrix;
+    int **transposedMatrix;
     int rows;
     int columns;
     int nonZeros;
@@ -171,22 +172,74 @@ public:
 
         return result;
     }
+    void RowMajorSort()
+    {
+        for (int i = 1; i <= this->nonZeros; i++)
+        {
+            for (int j = i + 1; j <= this->nonZeros; j++)
+            {
+                if (transposedMatrix[i][0] > transposedMatrix[j][0] or (transposedMatrix[i][0] == transposedMatrix[j][0] and transposedMatrix[i][1] > transposedMatrix[j][1]))
+                {
+                    swap(transposedMatrix[i], transposedMatrix[j]);
+                }
+            }
+        }
+    }
+     void Transpose()
+    {
+        transposedMatrix = new int *[this->nonZeros + 1];
+        for (int i = 0; i <= this->nonZeros; i++)
+        {
+            transposedMatrix[i] = new int[3];
+        }
+        transposedMatrix[0][0] = this->columns; 
+        transposedMatrix[0][1] = this->rows;
+        transposedMatrix[0][2] = this->nonZeros;
+
+        int k = 1;
+        for (int i = 1; i <= this->nonZeros; i++)
+        {
+            transposedMatrix[k][0] = sparseMatrix[i][1];
+            transposedMatrix[k][1] = sparseMatrix[i][0];
+            transposedMatrix[k][2] = sparseMatrix[i][2];
+            k++;
+        }
+        RowMajorSort();
+        cout << "Transpose of sparse matrix created" << endl;
+    }
+
+    void displayTransposedSparse()
+    {
+        if (transposedMatrix == nullptr)
+        {
+            cout << "Transpose matrix not created" << endl;
+            return;
+        }
+        cout << "rows\tcolumns\tvalues\n";
+        for (int i = 0; i <= this->nonZeros; i++)
+        {
+            cout << transposedMatrix[i][0] << "\t" << transposedMatrix[i][1] << "\t" << transposedMatrix[i][2] << endl;
+        }
+    }
 };
 int main()
 {
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
+    freopen("output.txt", "w", stdout);
 #endif
     SparseMatrix mat(3, 3);
     mat.setMatrix();
     mat.SparseIt();
     mat.DisplaySparse();
-    SparseMatrix mat1(3, 3);
-    mat1.setMatrix();
-    mat1.SparseIt();
-    mat1.DisplaySparse();
-    SparseMatrix result = mat1 + mat + mat;
-    result.DisplaySparse();
+    mat.Transpose();
+    mat.displayTransposedSparse();
+    // SparseMatrix mat1(3, 3);
+    // mat1.setMatrix();
+    // mat1.SparseIt();
+    // mat1.DisplaySparse();
+    // SparseMatrix result = mat1 + mat1 + mat + mat;
+    // result.DisplaySparse();
+    // result.Transpose();
     return EXIT_SUCCESS;
 }
