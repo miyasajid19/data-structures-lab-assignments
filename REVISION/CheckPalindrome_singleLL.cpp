@@ -82,7 +82,7 @@ public:
 
         // Step 3: Compare the first half and the reversed second half
         Node *head1 = head, *head2 = prev; // prev is the new head of the reversed half
-        while (head2) // Only need to compare till the end of head2 (reversed second half)
+        while (head2)                      // Only need to compare till the end of head2 (reversed second half)
         {
             if (head1->value != head2->value)
                 return false;
