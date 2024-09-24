@@ -73,8 +73,9 @@ public:
         while (temp->Next != head and counter < index - 1)
         {
             temp = temp->Next;
+            counter++;
         }
-        if (temp->Next == head)
+        if (counter != index-1)
         {
             cout << "Invalid indexing " << endl;
             return;
