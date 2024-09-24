@@ -73,11 +73,7 @@ public:
     }
     void update(int value, int index)
     {
-        if (index == 0)
-        {
-            InsertAtHead(value);
-            return;
-        }
+
         int counter = 0;
         Node *temp = head;
         while (temp != nullptr and counter < index )
