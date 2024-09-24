@@ -163,7 +163,29 @@ public:
         temp->Next = temp->Next->Next;
         delete todelete;
     }
-
+    void updateHead(int value)
+    {
+        if (head == nullptr)
+        {
+            cout << "Circular linked list is empty" << endl;
+            return;
+        }
+        this->head->Value = value;
+    }
+    void updateTail(int value)
+    {
+        if (head == nullptr)
+        {
+            cout << "Circular linked list is empty" << endl;
+            return;
+        }
+        Node *temp = head;
+        while (temp->Next != head)
+        {
+            temp = temp->Next;
+        }
+        temp->Value = value;
+    }
     void Display()
     {
         if (head == nullptr)
