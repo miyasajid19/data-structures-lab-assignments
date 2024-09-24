@@ -14,9 +14,9 @@ public:
 };
 class LinkedLists
 {
-    Node *head;
 
 public:
+    Node *head;
     LinkedLists()
     {
         this->head = nullptr;
@@ -111,16 +111,6 @@ public:
         }
         temp->Value = value;
     }
-    void Display()
-    {
-        Node *temp = head;
-        while (temp != nullptr)
-        {
-            cout << temp->Value << "->";
-            temp = temp->Next;
-        }
-        cout << "nullptr" << endl;
-    }
     void DeleteFromHead()
     {
         if (head == nullptr)
@@ -198,6 +188,27 @@ public:
         temp->Next = temp->Next->Next;
         delete toDelete;
     }
+    void Display()
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->Value << "->";
+            temp = temp->Next;
+        }
+        cout << "nullptr" << endl;
+    }
+    void ReverseDisplay(Node *temp)
+    {
+        if (temp == nullptr)
+        {
+            cout << endl
+                 << nullptr;
+            return;
+        }
+        ReverseDisplay(temp->Next);
+        cout << "<-" << temp->Value;
+    }
 };
 int main()
 {
@@ -228,21 +239,6 @@ int main()
     lists.Display();
     lists.Delete(1);
     lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
+    lists.ReverseDisplay(lists.head);
     return EXIT_SUCCESS;
 }
