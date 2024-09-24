@@ -88,6 +88,9 @@ int main()
         queue.Display();
         cout << endl;
     }
+    queue.Dequeue();
+    queue.Enqueue(432);
+    queue.Display();
     for (int i = 0; i < 6; i++)
     {
         queue.Dequeue();
@@ -95,6 +98,5 @@ int main()
         queue.Display();
         cout << endl;
     }
-
     return EXIT_SUCCESS;
 }
