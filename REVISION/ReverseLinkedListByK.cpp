@@ -85,7 +85,7 @@ int main()
 #endif
     LinkedLists list;
 
-    for (int i = 1; i < 6; i++)
+    for (int i = 1; i < 14; i += 2)
     {
         list.Push(i);
         list.Display();
