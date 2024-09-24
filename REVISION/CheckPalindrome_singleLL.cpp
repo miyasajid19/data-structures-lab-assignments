@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
+
 class Node
 {
 public:
@@ -38,6 +39,7 @@ public:
         }
         temp->Next = new_node;
     }
+
     void display()
     {
         if (head == nullptr)
@@ -53,52 +55,66 @@ public:
         }
         cout << "nullptr" << endl;
     }
-    bool IsPlaindrome()
+
+    bool IsPalindrome()
     {
-        Node *slowPointer = head;
-        Node *fastPointer = head;
-        while (fastPointer and fastPointer->Next)
+        if (!head || !head->Next)
+            return true; // A single node or empty list is a palindrome
+
+        Node *slowPointer = head, *fastPointer = head;
+
+        // Step 1: Find the middle of the linked list
+        while (fastPointer && fastPointer->Next)
         {
             slowPointer = slowPointer->Next;
             fastPointer = fastPointer->Next->Next;
         }
-        Node *second = slowPointer->Next;
-        slowPointer->Next = nullptr;
-        Node *first = slowPointer;
-        // reversing the second pointer
-        while (second)
+
+        // Step 2: Reverse the second half of the linked list
+        Node *prev = nullptr, *current = slowPointer, *nextNode = nullptr;
+        while (current)
         {
-            Node *nextNode = second->Next;
-            second->Next = first;
-            first = second;
-            second = nextNode;
+            nextNode = current->Next;
+            current->Next = prev;
+            prev = current;
+            current = nextNode;
         }
-        Node *head1 = head;
-        Node *head2 = first;
-        while (head1 and head2)
+
+        // Step 3: Compare the first half and the reversed second half
+        Node *head1 = head, *head2 = prev; // prev is the new head of the reversed half
+        while (head2) // Only need to compare till the end of head2 (reversed second half)
         {
-            if (head1->value == head2->value)
-            {
-                return true;
-            }
-            head1=head1->Next;
-            head2=head2->Next;
+            if (head1->value != head2->value)
+                return false;
+            head1 = head1->Next;
+            head2 = head2->Next;
         }
-        return false;
+
+        return true;
     }
 };
+
 int main()
 {
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-LinkedLists list;
-cout<<boolalpha;
-list.push(1);
-list.push(3);
-list.push(2);
-list.push(1);
-cout<<list.IsPlaindrome();
+
+    LinkedLists list;
+    cout << boolalpha;
+
+    // Adding elements to the linked list
+    list.push(1);
+    list.push(2);
+    list.push(4);
+    list.push(1);
+
+    // Display the list
+    list.display();
+
+    // Check if the list is a palindrome
+    cout << "Is the linked list a palindrome? " << list.IsPalindrome() << endl;
+
     return EXIT_SUCCESS;
 }
