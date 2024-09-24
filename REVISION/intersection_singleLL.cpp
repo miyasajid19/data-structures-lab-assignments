@@ -98,7 +98,7 @@ int main()
 #ifndef online_judge
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-#endif // !1
+#endif // !online_judge
     LinkedLists list1;
     cout << "Creating first linked list (list1) with values 0 to 4:" << endl;
     for (int i = 0; i < 5; i++)
