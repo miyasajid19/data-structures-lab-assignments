@@ -202,8 +202,8 @@ public:
     {
         if (temp == nullptr)
         {
-            cout << endl
-                 << nullptr;
+            cout
+                << nullptr;
             return;
         }
         ReverseDisplay(temp->Next);
@@ -215,30 +215,58 @@ int main()
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-#endif
-    LinkedLists lists;
-    lists.InsertAtHead(3);
-    lists.Display();
-    lists.InsertAtHead(2);
-    lists.Display();
-    lists.InsertAtHead(1);
-    lists.Display();
-    lists.InsertAtTail(5);
-    lists.Display();
-    lists.InsertAtTail(6);
-    lists.Display();
-    lists.InsertAtTail(7);
-    lists.Display();
-    lists.Insert(432, 3);
-    lists.Display();
-    lists.Update(4, 3);
-    lists.Display();
-    lists.DeleteFromHead();
-    lists.Display();
-    lists.DeleteFromTail();
-    lists.Display();
-    lists.Delete(1);
-    lists.Display();
-    lists.ReverseDisplay(lists.head);
+#endif // !ONLINE_JUDGE
+    LinkedLists list;
+
+    list.InsertAtHead(1);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.InsertAtHead(2);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.InsertAtTail(3);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.Insert(4, 2);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.UpdateHead(5);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.UpdateTail(6);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.Update(7, 2);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.DeleteFromHead();
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.DeleteFromTail();
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
+    list.Delete(1);
+    list.Display();
+    list.ReverseDisplay(list.head);
+    cout << endl;
+
     return EXIT_SUCCESS;
 }
