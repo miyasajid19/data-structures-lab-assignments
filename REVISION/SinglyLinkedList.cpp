@@ -71,12 +71,35 @@ public:
         new_node->Next = temp->Next;
         temp->Next = new_node;
     }
-    void update(int value, int index)
+    void UpdateHead(int value)
+    {
+        if (head == nullptr)
+        {
+            cout << "linked list is empty" << endl;
+            return;
+        }
+        head->Value = value;
+    }
+    void UpdateTail(int value)
+    {
+        if (head == nullptr)
+        {
+            cout << "linked list is empty" << endl;
+            return;
+        }
+        Node *temp = head;
+        while (temp->Next != nullptr)
+        {
+            temp = temp->Next;
+        }
+        temp->Value = value;
+    }
+    void Update(int value, int index)
     {
 
         int counter = 0;
         Node *temp = head;
-        while (temp != nullptr and counter < index )
+        while (temp != nullptr and counter < index)
         {
             temp = temp->Next;
             counter++;
@@ -86,7 +109,7 @@ public:
             cout << "invlaid indexing" << endl;
             return;
         }
-        temp->Value=value;
+        temp->Value = value;
     }
     void Display()
     {
@@ -120,7 +143,7 @@ int main()
     lists.Display();
     lists.Insert(432, 3);
     lists.Display();
-    lists.update(4, 3);
+    lists.Update(4, 3);
     lists.Display();
     return EXIT_SUCCESS;
 }
