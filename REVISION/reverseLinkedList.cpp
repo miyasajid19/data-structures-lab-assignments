@@ -68,11 +68,11 @@ int main()
     freopen("output.txt", "w", stdout);
 #endif // !ONLINE_JUDGE
     LinkedLists list;
-    for (int i = 1; i < 14; i += 2)
+    for (int i = 432; i >= 407; i--)
     {
         list.Push(i);
-        list.Display();
     }
+    list.Display();
     list.Reverse();
     list.Display();
     return EXIT_SUCCESS;
