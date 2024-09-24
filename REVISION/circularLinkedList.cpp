@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
+
 class Node
 {
 public:
@@ -12,6 +13,7 @@ public:
         this->Next = nullptr;
     }
 };
+
 class CircularLinkedList
 {
     Node *head;
@@ -21,6 +23,7 @@ public:
     {
         this->head = nullptr;
     }
+
     void InsertAtHead(int value)
     {
         Node *new_node = new Node(value);
@@ -39,6 +42,7 @@ public:
         new_node->Next = head;
         head = new_node;
     }
+
     void InsertAtTail(int value)
     {
         Node *new_node = new Node(value);
@@ -56,6 +60,7 @@ public:
         new_node->Next = head;
         temp->Next = new_node;
     }
+
     void Insert(int value, int index)
     {
         if (index < 0)
@@ -84,9 +89,9 @@ public:
         new_node->Next = temp->Next;
         temp->Next = new_node;
     }
+
     void deleteFromHead()
     {
-
         if (head == nullptr)
         {
             return;
@@ -107,6 +112,7 @@ public:
         temp->Next = head;
         delete todelete;
     }
+
     void DeleteFromTail()
     {
         if (head == nullptr)
@@ -126,12 +132,14 @@ public:
         }
         Node *todelete = temp->Next;
         temp->Next = head;
+        delete todelete;
     }
+
     void Delete(int index)
     {
         if (index < 0)
         {
-            cout << "invlaid indexing" << endl;
+            cout << "Invalid indexing" << endl;
             return;
         }
         if (index == 0)
@@ -146,28 +154,21 @@ public:
             temp = temp->Next;
             counter++;
         }
-        if (temp->Next == head and counter < index - 1)
+        if (counter != index - 1)
         {
-            DeleteFromTail();
+            cout << "Invalid indexing" << endl;
             return;
         }
-        if (counter < index - 1)
-        {
-            Node *todelete = temp->Next;
-            temp->Next = temp->Next->Next;
-            delete temp;
-        }
-        else
-        {
-            cout << "invalid indexing";
-            return;
-        }
+        Node *todelete = temp->Next;
+        temp->Next = temp->Next->Next;
+        delete todelete;
     }
+
     void Display()
     {
         if (head == nullptr)
         {
-            cout << "circular linked list is empty" << endl;
+            cout << "Circular linked list is empty" << endl;
             return;
         }
         if (head->Next == head)
@@ -175,18 +176,16 @@ public:
             cout << "<-" << head->Value << "->" << endl;
             return;
         }
-        cout << endl;
         Node *temp = head;
-
         do
         {
-
             cout << "->" << temp->Value << "<-";
             temp = temp->Next;
         } while (temp != head);
         cout << endl;
     }
 };
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -207,5 +206,7 @@ int main()
     list.DeleteFromTail();
     list.Display();
     list.Delete(1);
+    list.Display();
+
     return EXIT_SUCCESS;
 }
