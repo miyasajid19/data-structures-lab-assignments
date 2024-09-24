@@ -52,23 +52,23 @@ public:
 
     void Merge(LinkedLists &other)
     {
-        if (other.head == nullptr) // If the second list is empty, do nothing
+        if (other.head == nullptr)
         {
             return;
         }
 
-        if (this->head == nullptr) // If the current list is empty, simply point to the other list
+        if (this->head == nullptr)
         {
             this->head = other.head;
             return;
         }
 
         Node *temp1 = this->head;
-        while (temp1->Next != nullptr) // Traverse to the end of the current list
+        while (temp1->Next != nullptr)
         {
             temp1 = temp1->Next;
         }
-        temp1->Next = other.head; // Attach the other list to the end of the current list
+        temp1->Next = other.head;
     }
 };
 
