@@ -4,11 +4,26 @@ using namespace std;
 class SparseMatrix
 {
     int **arr;
-    int **SparseMatrix;
+    int **sparseMatrix;
     int **TransposeSparse;
     int rows;
     int columns;
     int nonZeros;
+
+public:
+    SparseMatrix(int rows, int columns)
+    {
+        this->rows = rows;
+        this->columns = columns;
+        arr = new int *[rows];
+        for (int i = 0; i < rows; i++)
+        {
+            arr[i] = new int[columns];
+        }
+    }
+    void setMatrix()
+    {
+    }
 };
 int main()
 {
