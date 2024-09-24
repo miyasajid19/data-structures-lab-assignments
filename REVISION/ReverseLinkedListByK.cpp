@@ -71,9 +71,9 @@ public:
         return previousPointer;
     }
 
-    void Reverse()
+    void ReverseByK(int k)
     {
-        head = reversebyk(head, 2);
+        head = reversebyk(head, k);
     }
 };
 
@@ -91,7 +91,7 @@ int main()
         list.Display();
     }
 
-    list.Reverse();
+    list.ReverseByK(3);
     list.Display();
 
     return EXIT_SUCCESS;
