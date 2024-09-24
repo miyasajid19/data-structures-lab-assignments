@@ -186,6 +186,33 @@ public:
         }
         temp->Value = value;
     }
+
+    void Update(int value, int index)
+    {
+        if (index < 0)
+        {
+            cout << "Invalid indexing" << endl;
+            return;
+        }
+        if (index == 0)
+        {
+            updateHead(value);
+            return;
+        }
+        Node *temp = head;
+        int counter = 0;
+        while (temp->Next != head and counter <= index)
+        {
+            temp = temp->Next;
+            counter++;
+        }
+        if (counter != index)
+        {
+            cout << "Invalid indexing " << endl;
+            return;
+        }
+        temp->Value = value;
+    }
     void Display()
     {
         if (head == nullptr)
@@ -229,6 +256,11 @@ int main()
     list.Display();
     list.Delete(1);
     list.Display();
-
+    list.updateHead(432);
+    list.Display();
+    list.updateTail(407);
+    list.Display();
+    list.Update(407432, 0);
+    list.Display();
     return EXIT_SUCCESS;
 }
