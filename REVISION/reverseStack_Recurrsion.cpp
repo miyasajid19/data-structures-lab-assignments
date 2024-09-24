@@ -1,53 +1,89 @@
 #include <iostream>
 #include <cstdlib>
-#include <stack>
 using namespace std;
-void InsertAtButton(stack<int> &stk, int value)
+
+class Node
 {
-    if (stk.empty())
+public:
+    int Value;
+    Node *Next;
+    Node(int value)
     {
-        stk.push(value);
-        return;
+        this->Value = value;
+        this->Next = nullptr;
     }
-    int x = stk.top();
-    stk.pop();
-    InsertAtButton(stk, value);
-    stk.push(x);
-}
-void Reverse(stack<int> &stk)
+};
+
+class LinkedLists
 {
-    if (stk.empty())
+public:
+    Node *head;
+    LinkedLists()
     {
-        return;
+        this->head = nullptr;
     }
-    int x = stk.top();
-    stk.pop();
-    Reverse(stk);
-    InsertAtButton(stk, x);
-}
+
+    void Push(int value)
+    {
+        Node *new_node = new Node(value);
+        if (head == nullptr)
+        {
+            head = new_node;
+            return;
+        }
+        Node *temp = head;
+        while (temp->Next != nullptr)
+        {
+            temp = temp->Next;
+        }
+        temp->Next = new_node;
+    }
+
+    void Display()
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->Value << "->";
+            temp = temp->Next;
+        }
+        cout << "nullptr" << endl;
+    }
+
+    Node* ReverseList(Node *node)
+    {
+        if (node == nullptr || node->Next == nullptr)
+        {
+            return node;
+        }
+        Node *new_head = ReverseList(node->Next);
+        node->Next->Next = node;
+        node->Next = nullptr;
+        return new_head;
+    }
+
+    void Reverse()
+    {
+        head = ReverseList(head);
+    }
+};
+
 int main()
 {
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
+    LinkedLists list;
 
-    stack<int> stk;
-    cout << "Pushing 1 onto the stack.\n";
-    stk.push(1);
+    for (int i =1;i<14; i++)
+    {
+        list.Push(i);
+        list.Display();
+    }
 
-    cout << "Pushing 2 onto the stack.\n";
-    stk.push(2);
-
-    cout << "Pushing 3 onto the stack.\n";
-    stk.push(3);
-
-    cout << "Current top element of the stack: " << stk.top() << endl;
-
-    cout << "Reversing the stack...\n";
-    Reverse(stk);
-
-    cout << "New top element after reversing the stack: " << stk.top() << endl;
+    list.Reverse();
+    list.Display();
 
     return EXIT_SUCCESS;
 }
