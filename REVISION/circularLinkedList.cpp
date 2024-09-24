@@ -75,7 +75,7 @@ public:
             temp = temp->Next;
             counter++;
         }
-        if (counter != index-1)
+        if (counter != index - 1)
         {
             cout << "Invalid indexing " << endl;
             return;
@@ -83,6 +83,64 @@ public:
         Node *new_node = new Node(value);
         new_node->Next = temp->Next;
         temp->Next = new_node;
+    }
+    void deleteFromHead()
+    {
+
+        if (head == nullptr)
+        {
+            return;
+        }
+        if (head->Next == head)
+        {
+            delete head;
+            this->head = nullptr;
+            return;
+        }
+        Node *temp = head;
+        while (temp->Next != head)
+        {
+            temp = temp->Next;
+        }
+        Node *todelete = head;
+        head = head->Next;
+        temp->Next = head;
+        delete todelete;
+    }
+    void DeleteFromTail()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+        if (head->Next == head)
+        {
+            delete head;
+            this->head = nullptr;
+            return;
+        }
+        Node *temp = head;
+        while (temp->Next->Next != head)
+        {
+            temp = temp->Next;
+        }
+        Node *todelete = temp->Next;
+        temp->Next = head;
+    }
+    void Delete(int index)
+    {
+        if (index < 0)
+        {
+            cout << "invlaid indexing" << endl;
+            return;
+        }
+        if (index == 0)
+        {
+            deleteFromHead();
+            return;
+        }
+        int counter=0;
+        
     }
     void Display()
     {
@@ -121,8 +179,11 @@ int main()
     list.Display();
     list.InsertAtTail(3);
     list.Display();
-    list.Insert(2,2);
+    list.Insert(2, 2);
     list.Display();
-
+    list.deleteFromHead();
+    list.Display();
+    list.DeleteFromTail();
+    list.Display();
     return EXIT_SUCCESS;
 }
