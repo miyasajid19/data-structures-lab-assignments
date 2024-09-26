@@ -5,24 +5,28 @@
 using namespace std;
 void Reverse(queue<int> &Q)
 {
-    if(Q.empty())
+    if (Q.empty())
     {
         return;
     }
-    int x=Q.front();
+    int x = Q.front();
     Q.pop();
     Reverse(Q);
     Q.push(x);
 }
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
     queue<int> Q;
-    for (int i = 0; i <5; i++)
-        Q.push(i);
+    for (int i = 0; i < 5; i++)
+    {
+        int x;
+        cin >> x;
+        Q.push(x);
+    }
     queue<int> temp = Q;
     cout << "original Queue ::: ";
     while (!temp.empty())
