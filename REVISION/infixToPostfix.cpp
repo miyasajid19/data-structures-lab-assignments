@@ -79,4 +79,4 @@ int main()
     cout << "the equivalennt postfix operation is  :: " << infixToPostfix(str);
     return EXIT_SUCCESS;
 }
-//AB+CDE^*FG^*-HI-JK/LM^*+-
+// AB+CDE^*FG^*-HI-JK/LM^*+-
