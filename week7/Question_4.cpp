@@ -58,8 +58,8 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    list<int> list1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    list<int> list2 = {4, 5, 6, 7, 10, 11, 12};
+    list<int> list1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1,2,4,1};
+    list<int> list2 = {4, 5, 6, 7, 10, 11, 12,4};
     Solution soln(list1, list2);
     // soln.display();
     list<int> Intersection = soln.GetIntersection();
