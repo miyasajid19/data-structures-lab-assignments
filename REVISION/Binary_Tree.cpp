@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <queue>
 using namespace std;
 class Node
 {
@@ -46,16 +47,50 @@ public:
     void BuildTree()
     {
         root = buildTree(root);
-        cout << "Tree has been intialized";
+        cout << "Tree has been intialized\n";
+    }
+    void LevelWiseTraversal()
+    {
+        queue<Node *> Queue;
+        Queue.push(root);
+        Queue.push(nullptr);
+        int level = 0;
+        while (not Queue.empty())
+        {
+            Node *frontNode = Queue.front();
+            Queue.pop();
+            if (frontNode == nullptr)
+            {
+                cout << "Level " << level++;
+                cout << endl;
+                if (not Queue.empty())
+                {
+                    Queue.push(nullptr);
+                }
+            }
+            else
+            {
+                cout << frontNode->value << "\t";
+                if (frontNode->left)
+                {
+                    Queue.push(frontNode->left);
+                }
+                if (frontNode->right)
+                {
+                    Queue.push(frontNode->right);
+                }
+            }
+        }
     }
 };
 int main()
 {
-// #ifndef ONLINE_JUDGE
-//     freopen("input.txt", "r", stdin);
-//     freopen("output.txt", "w", stdout);
-// #endif
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);
+        // freopen("output.txt", "w", stdout);
+    #endif
     Tree tree;
     tree.BuildTree();
+    tree.LevelWiseTraversal();
     return EXIT_SUCCESS;
 }
