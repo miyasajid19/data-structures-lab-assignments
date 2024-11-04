@@ -35,7 +35,7 @@ int main()
 #endif
     vector<int> arr = {2, 7, 11, 15};
     Solution soln;
-    
+
     // Test case where the target is found
     vector<int> ans = soln.TwoSum(arr, 9);
     if (ans[0] != -1)
