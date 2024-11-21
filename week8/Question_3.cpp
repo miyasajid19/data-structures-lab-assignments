@@ -97,7 +97,7 @@ class BST
 
     Node *deleteNode(Node *temp, int value, bool replaceWithMaxFromLeft = false)
     {
-        if (temp == nullptr)  // Fix the condition here
+        if (temp == nullptr) // Fix the condition here
         {
             return temp;
         }
@@ -148,6 +148,18 @@ class BST
         }
         return temp;
     }
+    int maxDepth(Node *temp)
+    {
+        if (temp == nullptr)
+            return 0;
+        return 1 + max(maxDepth(temp->left), maxDepth(temp->right));
+    }
+    int minDepth(Node *temp)
+    {
+        if (temp == nullptr)
+            return 0;
+        return 1 + min(minDepth(temp->left), minDepth(temp->right));
+    }
 
 public:
     BST() : root(nullptr) {}
@@ -187,6 +199,15 @@ public:
     {
         root = deleteNode(root, value, key);
     }
+    int getMaxDepth()
+    {
+        return maxDepth(root);
+    }
+
+    int getMinDepth()
+    {
+        return minDepth(root);
+    }
 };
 
 int main()
@@ -203,8 +224,10 @@ int main()
     bst.insert(-1); // we can insert -1  by this
     bst.levelOrderTraversal();
     bst.Inorder();
-    bst.DeleteNode(9,true);
+    bst.DeleteNode(9, true);
     bst.levelOrderTraversal();
     bst.Inorder();
+    cout << "Max Depth :: " << bst.getMaxDepth() << endl;
+    cout << "Min Depth :: " << bst.getMinDepth() << endl;
     return EXIT_SUCCESS;
 }
