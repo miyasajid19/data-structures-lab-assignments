@@ -157,3 +157,5 @@ int main()
     cout<<"Is BST ?? "<<bst.isBST()<<endl;
     return EXIT_SUCCESS;
 }
+//second intution can be find the minimum and maximum values as we did as of defination of bst and then check 
+//if is element is in this range or not and if not the is not bst so that you can save the space of queue
