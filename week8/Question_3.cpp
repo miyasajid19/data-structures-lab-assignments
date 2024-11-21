@@ -67,6 +67,7 @@ class BST
 
         return temp;
     }
+
     Node *FindMax(Node *temp)
     {
         while (temp->right != nullptr)
@@ -75,6 +76,7 @@ class BST
         }
         return temp;
     }
+
     Node *FindMin(Node *temp)
     {
         while (temp->left != nullptr)
@@ -83,6 +85,7 @@ class BST
         }
         return temp;
     }
+
     void inorder(Node *temp)
     {
         if (temp == nullptr)
@@ -91,60 +94,56 @@ class BST
         cout << temp->value << "\t";
         inorder(temp->right);
     }
-    Node *deleteNode(Node *temp, int value, bool replacementfromLefttoright = false)
+
+    Node *deleteNode(Node *temp, int value, bool replaceWithMaxFromLeft = false)
     {
-        if (temp = nullptr)
+        if (temp == nullptr)  // Fix the condition here
         {
             return temp;
         }
+
         if (value > temp->value)
         {
-            temp->right = deleteNode(temp->right, value, replacementfromLefttoright);
+            temp->right = deleteNode(temp->right, value, replaceWithMaxFromLeft);
         }
         else if (value < temp->value)
         {
-            temp->left = deleteNode(temp->left, value, replacementfromLefttoright);
+            temp->left = deleteNode(temp->left, value, replaceWithMaxFromLeft);
         }
         else
         {
-            // we found the node that we have to delete
-            if (temp->left == nullptr and temp->right == nullptr)
+            // Node found to delete
+            if (temp->left == nullptr && temp->right == nullptr)
             {
                 delete temp;
                 return nullptr;
             }
-            // if it has only left child
-            if (temp->left != nullptr and temp->right == nullptr)
+            // Node has only left child
+            if (temp->left != nullptr && temp->right == nullptr)
             {
                 Node *leftchild = temp->left;
                 delete temp;
                 return leftchild;
             }
-            if (temp->left != nullptr and temp->right == nullptr)
-            {
-                Node *leftchild = temp->left;
-                delete temp;
-                return leftchild;
-            }
-            // if has only right child
-            if (temp->right != nullptr and temp->left == nullptr)
+            // Node has only right child
+            if (temp->right != nullptr && temp->left == nullptr)
             {
                 Node *rightchild = temp->right;
                 delete temp;
                 return rightchild;
             }
-            // if have both left and right child
-            if (replacementfromLefttoright)
+            // Node has both left and right children
+            if (replaceWithMaxFromLeft)
             {
                 Node *maxNode = FindMax(temp->left);
                 temp->value = maxNode->value;
-                temp->left = deleteNode(temp->left, maxNode->value, replacementfromLefttoright);
+                temp->left = deleteNode(temp->left, maxNode->value, replaceWithMaxFromLeft);
             }
             else
             {
                 Node *minNode = FindMin(temp->right);
                 temp->value = minNode->value;
-                temp->left = deleteNode(temp->right, minNode->value, replacementfromLefttoright);
+                temp->right = deleteNode(temp->right, minNode->value, replaceWithMaxFromLeft);
             }
         }
         return temp;
@@ -171,16 +170,19 @@ public:
         levelorder(root);
         cout << endl;
     }
+
     void Inorder()
     {
         cout << "Inorder Traversal ::: ";
         inorder(root);
         cout << endl;
     }
+
     void insert(int value)
     {
         root = buildTree(root, value);
     }
+
     void DeleteNode(int value, bool key = false)
     {
         root = deleteNode(root, value, key);
@@ -201,7 +203,7 @@ int main()
     bst.insert(-1); // we can insert -1  by this
     bst.levelOrderTraversal();
     bst.Inorder();
-    bst.DeleteNode(9);
+    bst.DeleteNode(9,true);
     bst.levelOrderTraversal();
     bst.Inorder();
     return EXIT_SUCCESS;
