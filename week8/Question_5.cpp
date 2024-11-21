@@ -10,6 +10,7 @@ public:
     int value;
     Node *left;
     Node *right;
+
     Node(int value) : value(value), left(nullptr), right(nullptr) {}
 };
 
@@ -17,74 +18,67 @@ class BST
 {
     Node *root;
 
-    void levelorder(Node *temp)
+    void levelorder(Node *node)
     {
-        if (temp == nullptr)
+        if (!node)
         {
             cout << "Tree is empty." << endl;
             return;
         }
 
         queue<Node *> Queue;
-        int level = 0;
-        cout << "Level " << level << " :: ";
-        Queue.push(temp);
-        Queue.push(nullptr); // Marker for level separation
+        Queue.push(node);
 
+        int level = 0;
         while (!Queue.empty())
         {
-            Node *TopNode = Queue.front();
-            Queue.pop();
+            int levelSize = Queue.size();
+            cout << "Level " << level++ << " :: ";
+            while (levelSize--)
+            {
+                Node *current = Queue.front();
+                Queue.pop();
 
-            if (TopNode == nullptr)
-            {
-                cout << endl;
-                level++;
-                if (!Queue.empty())
-                {
-                    cout << "Level " << level << " :: ";
-                    Queue.push(nullptr); // Add marker for next level
-                }
+                cout << current->value << '\t';
+
+                if (current->left)
+                    Queue.push(current->left);
+                if (current->right)
+                    Queue.push(current->right);
             }
-            else
-            {
-                cout << TopNode->value << '\t';
-                if (TopNode->left)
-                    Queue.push(TopNode->left);
-                if (TopNode->right)
-                    Queue.push(TopNode->right);
-            }
+            cout << endl;
         }
     }
 
-    Node *buildTree(Node *temp, int value)
+    Node *buildTree(Node *node, int value)
     {
-        if (temp == nullptr)
+        if (!node)
             return new Node(value);
 
-        if (value > temp->value)
-            temp->right = buildTree(temp->right, value);
-        else if (value < temp->value)
-            temp->left = buildTree(temp->left, value);
+        if (value < node->value)
+            node->left = buildTree(node->left, value);
+        else if (value > node->value)
+            node->right = buildTree(node->right, value);
 
-        return temp;
+        return node;
     }
 
-    void inorder(Node *temp)
+    void inorder(Node *node)
     {
         stack<Node *> stk;
-        Node *currentNode = temp;
-        while (currentNode != nullptr or not stk.empty())
+        Node *current = node;
+
+        while (current || !stk.empty())
         {
-            while (currentNode != nullptr)
+            while (current)
             {
-                stk.push(currentNode);
-                currentNode = currentNode->left;
+                stk.push(current);
+                current = current->left;
             }
-            currentNode = stk.top();
+            current = stk.top();
             stk.pop();
-            cout << currentNode->value << "\t";
-            currentNode = currentNode->right;
+            cout << current->value << "\t";
+            current = current->right;
         }
     }
 
@@ -93,24 +87,20 @@ public:
 
     void BuildTree()
     {
-        int value;
         cout << "Enter elements to build the BST (enter -1 to stop): " << endl;
-        cin >> value;
-        while (value != -1)
-        {
+        int value;
+        while (cin >> value && value != -1)
             root = buildTree(root, value);
-            cin >> value;
-        }
     }
 
     void levelOrderTraversal()
     {
-        cout << "Level Order Traversal: " << endl;
+        cout << "Level Order Traversal:" << endl;
         levelorder(root);
         cout << endl;
     }
 
-    void Inorder()
+    void inorderTraversal()
     {
         cout << "Inorder Traversal ::: ";
         inorder(root);
@@ -120,14 +110,10 @@ public:
 
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-
     BST bst;
-    bst.BuildTree(); // from this we cannot add -1
+    bst.BuildTree();
     bst.levelOrderTraversal();
-    bst.Inorder();
-    return EXIT_SUCCESS;
+    bst.inorderTraversal();
+
+    return 0;
 }
